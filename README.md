@@ -53,5 +53,5 @@
 
 ### 📫 Контакты для связи
 
-[![Telegram](https://img.shields.io/badge/-Telegram-0b4a3f?style=flat&logo=telegram&logoColor=white)](https://t.me/ВСТАВЬТЕ_СЮДА_ВАШ_ТЕЛЕГРАМ)
-[![Email](https://img.shields.io/badge/-Email-0b4a3f?style=flat&logo=gmail&logoColor=white)](mailto:ВСТАВЬТЕ_СЮДА_ВАШ_EMAIL)
+[![Telegram](https://img.shields.io/badge/-Telegram-0b4a3f?style=flat&logo=telegram&logoColor=white)](https://t.me/watsys)
+[![Email](https://img.shields.io/badge/-Email-0b4a3f?style=flat&logo=gmail&logoColor=white)](mailto:kokenaliko@gmail.com)
