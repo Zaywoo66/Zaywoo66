@@ -40,14 +40,14 @@
 
 ### 📊 Статистика активности
 
-> **ВАЖНО:** Замените текст `ВСТАВЬТЕ_СЮДА_ВАШ_НИКНЕЙМ` в ссылках ниже на ваш точный логин GitHub, чтобы виджеты подтянули ваши реальные коммиты и репозитории.
+
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=ВСТАВЬТЕ_СЮДА_ВАШ_НИКНЕЙМ&show_icons=true&theme=buefy&hide_border=true&bg_color=F5F5DC&title_color=0b4a3f&icon_color=0b4a3f&text_color=333333&locale=ru" alt="GitHub Статистика" />
+  <img src="https://github-readme-stats.vercel.app/api?username=Zaywoo66&show_icons=true&theme=buefy&hide_border=true&bg_color=F5F5DC&title_color=0b4a3f&icon_color=0b4a3f&text_color=333333&locale=ru" alt="GitHub Статистика" />
 </p>
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=ВСТАВЬТЕ_СЮДА_ВАШ_НИКНЕЙМ&layout=compact&theme=buefy&hide_border=true&bg_color=F5F5DC&title_color=0b4a3f&text_color=333333&locale=ru" alt="Используемые Языки" />
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Zaywoo66&layout=compact&theme=buefy&hide_border=true&bg_color=F5F5DC&title_color=0b4a3f&text_color=333333&locale=ru" alt="Используемые Языки" />
 </p>
 
 ---
