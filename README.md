@@ -1,34 +1,58 @@
-# Привет, я [Ваше Имя] 👋
+# Привет! Я Full-Stack Разработчик 🚀
 
-Я full-stack веб-разработчик. Мой основной подход в архитектуре и дизайне — это строгая логика и премиальный минимализм. Создаю чистые, масштабируемые интерфейсы и надежные backend-системы.
+Специализируюсь на проектировании надежной серверной архитектуры, разработке масштабируемых веб-приложений и интеграции DevOps-практик. В своей работе я придерживаюсь концепции премиального минимализма — создаю чистые, интуитивно понятные интерфейсы и оптимизированный, легко поддерживаемый код.
 
-### 💻 Текущий фокус
-* Провожу глобальный рефакторинг и выстраиваю архитектуру full-stack проекта **TAU-PARK**.
-* Подготавливаю кодовую базу (от фронтенда до серверной логики) к техническим презентациям.
-* Фокусируюсь на 100% локализации проектов на русский язык и глубокой проработке UI/UX.
+---
 
-### 🛠 Технологический стек
+### 🛠 Специализация и Направления
 
-**Frontend & Backend:**
+*   **Full-Stack & Backend Разработка:** Проектирование архитектуры приложений, автоматизация серверной логики, работа с базами данных и построение отказоустойчивых систем.
+*   **DevOps & Инфраструктура:** Контейнеризация приложений, настройка сред разработки и автоматизация процессов развертывания для обеспечения стабильной работы сервисов.
+*   **Анализ Данных (Data Analysis):** Исследования в области машинного обучения, включая алгоритмы регрессии (например, для анализа стоковых данных / stock regression) и системы компьютерного зрения (Computer Vision).
+
+---
+
+### 💻 Текущие Проекты и Активность
+
+*   **TAU-PARK:** Провожу глобальный рефакторинг full-stack архитектуры проекта. Полностью перерабатываю логику backend-части и UI-компоненты на фронтенде для презентации чистого архитектурного решения на технических интервью.
+*   **Облачные Системы Хранения:** Разрабатываю архитектуру облачного приложения для организации и структурированного хранения медиаданных в виде альбомов.
+
+---
+
+### 🧰 Технологический Стек
+
+#### Frontend:
 ![React](https://img.shields.io/badge/-React-0b4a3f?style=flat&logo=react&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/-TypeScript-0b4a3f?style=flat&logo=typescript&logoColor=white)
+![HTML5](https://img.shields.io/badge/-HTML5-0b4a3f?style=flat&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/-CSS3-0b4a3f?style=flat&logo=css3&logoColor=white)
+
+#### Backend & DevOps:
 ![Node.js](https://img.shields.io/badge/-Node.js-0b4a3f?style=flat&logo=node.js&logoColor=white)
+![Docker](https://img.shields.io/badge/-Docker-0b4a3f?style=flat&logo=docker&logoColor=white)
 ![Git](https://img.shields.io/badge/-Git-0b4a3f?style=flat&logo=git&logoColor=white)
 
-**Инструменты:**
+#### Анализ Данных & Проектирование:
+![Python](https://img.shields.io/badge/-Python-0b4a3f?style=flat&logo=python&logoColor=white)
 ![Figma](https://img.shields.io/badge/-Figma-0b4a3f?style=flat&logo=figma&logoColor=white)
-![Docker](https://img.shields.io/badge/-Docker-0b4a3f?style=flat&logo=docker&logoColor=white)
 
-### 📊 Моя активность
+---
+
+### 📊 Статистика активности
+
+> **ВАЖНО:** Замените текст `ВСТАВЬТЕ_СЮДА_ВАШ_НИКНЕЙМ` в ссылках ниже на ваш точный логин GitHub, чтобы виджеты подтянули ваши реальные коммиты и репозитории.
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=YOUR_GITHUB_USERNAME&show_icons=true&theme=buefy&hide_border=true&bg_color=F5F5DC&title_color=0b4a3f&icon_color=0b4a3f&text_color=333333&locale=ru" alt="GitHub Stats" />
+  <img src="https://github-readme-stats.vercel.app/api?username=ВСТАВЬТЕ_СЮДА_ВАШ_НИКНЕЙМ&show_icons=true&theme=buefy&hide_border=true&bg_color=F5F5DC&title_color=0b4a3f&icon_color=0b4a3f&text_color=333333&locale=ru" alt="GitHub Статистика" />
 </p>
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=YOUR_GITHUB_USERNAME&layout=compact&theme=buefy&hide_border=true&bg_color=F5F5DC&title_color=0b4a3f&text_color=333333&locale=ru" alt="Top Languages" />
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=ВСТАВЬТЕ_СЮДА_ВАШ_НИКНЕЙМ&layout=compact&theme=buefy&hide_border=true&bg_color=F5F5DC&title_color=0b4a3f&text_color=333333&locale=ru" alt="Используемые Языки" />
 </p>
 
-### 📫 Связаться со мной
-[![Telegram](https://img.shields.io/badge/-Telegram-0b4a3f?style=flat&logo=telegram&logoColor=white)](https://t.me/YOUR_NICKNAME)
-[![LinkedIn](https://img.shields.io/badge/-LinkedIn-0b4a3f?style=flat&logo=linkedin&logoColor=white)](https://linkedin.com/in/YOUR_NICKNAME)
+---
+
+### 📫 Контакты для связи
+
+[![Telegram](https://img.shields.io/badge/-Telegram-0b4a3f?style=flat&logo=telegram&logoColor=white)](https://t.me/ВСТАВЬТЕ_СЮДА_ВАШ_ТЕЛЕГРАМ)
+[![Email](https://img.shields.io/badge/-Email-0b4a3f?style=flat&logo=gmail&logoColor=white)](mailto:ВСТАВЬТЕ_СЮДА_ВАШ_EMAIL)
