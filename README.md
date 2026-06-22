@@ -33,7 +33,7 @@
 
 #### Анализ Данных & Проектирование:
 ![Python](https://img.shields.io/badge/-Python-0b4a3f?style=flat&logo=python&logoColor=white)
-![Figma](https://img.shields.io/badge/-Figma-0b4a3f?style=flat&logo=figma&logoColor=white)
+
 
 ---
 
