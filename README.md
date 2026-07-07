@@ -1,14 +1,14 @@
 <p align="right"><a href="#english-version">English version</a></p>
 
-<h1 align="center">Привет, я Zaywoo</h1>
+<h1 align="center">Привет, я Алихан</h1>
 
 <p align="center">
   <em>Backend & Full-Stack разработчик | Изучаю DevOps и Machine Learning</em>
 </p>
 
 <p align="center">
-  <a href="https://t.me/your_telegram"><img src="https://img.shields.io/badge/Telegram-2CA5E0?style=flat-square&logo=telegram&logoColor=white"/></a>
-  <a href="mailto:your@email.com"><img src="https://img.shields.io/badge/Email-D14836?style=flat-square&logo=gmail&logoColor=white"/></a>
+  <a href="https://t.me/wattoo"><img src="https://img.shields.io/badge/Telegram-2CA5E0?style=flat-square&logo=telegram&logoColor=white"/></a>
+  <a href="mailto:kokenaliko@gmail.com"><img src="https://img.shields.io/badge/Email-D14836?style=flat-square&logo=gmail&logoColor=white"/></a>
   <a href="https://linkedin.com/in/your-linkedin"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=flat-square&logo=linkedin&logoColor=white"/></a>
 </p>
 
