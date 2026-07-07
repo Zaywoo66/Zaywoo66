@@ -63,14 +63,15 @@
 
 ### Избранные проекты
 
+**Incident Predictor** — ML-модель для предсказания инцидентов и сбоев на сервере, работает по принципу watchdog: анализирует метрики системы и заранее сигнализирует о риске сбоя, до того как он произойдёт.
+
 <p align="center">
-  <a href="https://github.com/Zaywoo66/tau-park-project">
-    <img src="https://github-readme-stats.vercel.app/api/pin/?username=Zaywoo66&repo=tau-park-project&theme=default" />
-  </a>
-  <a href="https://github.com/Zaywoo66/Smart-test-trigger">
-    <img src="https://github-readme-stats.vercel.app/api/pin/?username=Zaywoo66&repo=Smart-test-trigger&theme=default" />
+  <a href="https://github.com/Zaywoo66/Incident-predictor ">
+    <img src="https://github-readme-stats.vercel.app/api/pin/?username=Zaywoo66&repo=Smart-test-trigger &theme=default" />
   </a>
 </p>
+
+
 
 ---
 
@@ -96,9 +97,8 @@
 ---
 
 <a id="english-version"></a>
-<p align="right"><a href="#top">Русская версия выше</a></p>
 
-<h1 align="center">Hi, I'm Zaywoo</h1>
+<h1 align="center">Hi, I'm Alikhan </h1>
 
 <p align="center">
   <em>Backend & Full-Stack Developer | Learning DevOps and Machine Learning</em>
@@ -117,7 +117,6 @@
 - Building backend systems with **FastAPI**, gradually picking up **DevOps** practices (Docker, CI/CD, IaC)
 - Learning **Machine Learning** fundamentals: **scikit-learn**, **pandas**
 - Comfortable across the stack — from React interfaces to Go services and containerized backends
-- When working with AI coding agents, I keep discipline: reviewing every diff, writing tests, documenting architecture decisions
 - Open to backend / DevOps-adjacent roles and collaborations
 
 ---
@@ -162,14 +161,14 @@
 
 ### Featured Projects
 
+**Incident Predictor** — an ML model that predicts server incidents and failures, working as a watchdog: it analyzes system metrics and flags failure risk before it actually happens.
+
 <p align="center">
-  <a href="https://github.com/Zaywoo66/tau-park-project">
-    <img src="https://github-readme-stats.vercel.app/api/pin/?username=Zaywoo66&repo=tau-park-project&theme=default" />
-  </a>
-  <a href="https://github.com/Zaywoo66/Smart-test-trigger">
+  <a href="https://github.com/Zaywoo66/Incident-predictor">
     <img src="https://github-readme-stats.vercel.app/api/pin/?username=Zaywoo66&repo=Smart-test-trigger&theme=default" />
   </a>
 </p>
+
 
 ---
 
