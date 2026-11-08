@@ -12,11 +12,11 @@
 
 <h3 align="center">Проекты</h3>
 
-- **[Soup Wall](https://github.com/SoupTeam/soup-wall)** — мой прежний вклад в Linux-инструменты, проверки CI и диагностику для установленного пилота. `Rust` `Python`
 - **[Smart Test Trigger](https://github.com/Zaywoo66/Smart-test-trigger)** — GitHub Action для выбора тестов по изменениям; при неопределённости запускает полный набор. `Python`
 - **[Incident Predictor](https://github.com/Zaywoo66/Incident-predictor)** — прогноз сбоев по метрикам сервера, API и интерфейс. `FastAPI` `React`
 - **[Log Analyzer](https://github.com/Zaywoo66/log-analyzer)** — потоковый разбор nginx-логов из командной строки. `Go`
 - **[TAU-PARK](https://github.com/Zaywoo66/tau-park-project)** — приложение для бронирования. `FastAPI` `PostgreSQL` `React`
+- **[Soup Wall](https://github.com/SoupTeam/soup-wall)** — мой прежний вклад в Linux-инструменты, проверки CI и диагностику для установленного пилота. `Rust` `Python`
 
 ---
 
@@ -40,7 +40,7 @@ Rust · Python · Go · TypeScript · React · FastAPI · PostgreSQL · Docker �
   <img src="https://streak-stats.demolab.com?user=Zaywoo66&amp;theme=tokyonight&amp;hide_border=true" alt="Анимированная статистика публичных вкладов и серий активности Zaywoo66" width="495">
 </p>
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Zaywoo66/Zaywoo66/output/contribution-snake.svg?v=3" alt="Анимированный график публичных вкладов Zaywoo66" width="100%">
+  <img src="https://raw.githubusercontent.com/Zaywoo66/Zaywoo66/output/pacman-contribution-graph-dark.svg?v=1" alt="Анимированный график публичных вкладов Zaywoo66 в стиле Pac-Man" width="100%">
 </p>
 
 <sub>Сторонние карточки показывают публичные данные с задержкой, поэтому их счётчики могут отличаться от встроенного графика GitHub ниже.</sub>
