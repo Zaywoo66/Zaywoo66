@@ -1,190 +1,54 @@
-<p align="right"><a href="#english-version">English version</a></p>
+<div align="center">
+  <img src="assets/hero.svg" alt="Alikhan — backend engineering, reliable CI and secure systems" width="100%" />
 
-<h1 align="center">Привет, я Алихан</h1>
+  <p><strong>Backend & full-stack developer · Astana, Kazakhstan</strong></p>
 
-<p align="center">
-  <em>Backend & Full-Stack разработчик | Изучаю DevOps и Machine Learning</em>
-</p>
-
-<p align="center">
-  <a href="https://t.me/waattoo"><img src="https://img.shields.io/badge/Telegram-2CA5E0?style=flat-square&logo=telegram&logoColor=white"/></a>
-  <a href="mailto:kokenaliko@gmail.com"><img src="https://img.shields.io/badge/Email-D14836?style=flat-square&logo=gmail&logoColor=white"/></a>
-  <a href="https://linkedin.com/in/your-linkedin"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=flat-square&logo=linkedin&logoColor=white"/></a>
-</p>
-
----
-
-### Обо мне
-
-- Сейчас разрабатываю backend-системы на **FastAPI** и постепенно изучаю **DevOps**-практики (Docker, CI/CD, IaC)
-- Изучаю основы **Machine Learning**: **scikit-learn**, **pandas**
-- Работаю по всему стеку — от интерфейсов на React до сервисов на Go и контейнеризованных бэкендов
-- Открыт к backend / DevOps-направленным задачам и совместным проектам
+  <p>
+    <a href="https://t.me/waattoo">Telegram</a> ·
+    <a href="mailto:kokenaliko@gmail.com">Email</a> ·
+    <a href="#selected-work">Selected work</a> ·
+    <a href="#по-русски">По-русски</a>
+  </p>
+</div>
 
 ---
 
-### Стек
+### About
 
-**Языки**
+I build backend services and developer tooling, with a growing focus on **reliable CI, reproducible builds and secure execution boundaries**. I enjoy turning a vague failure into a small, testable change with clear evidence of what did and did not run.
 
-<p>
-  <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Go-00ADD8?style=flat-square&logo=go&logoColor=white"/>
-  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black"/>
-  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white"/>
-</p>
+My work spans Python APIs, Go utilities, TypeScript interfaces and Rust systems code. At [SoupTeam/soup-wall](https://github.com/SoupTeam/soup-wall), I contribute to CI admission and build verification, Linux pilot preparation and provider diagnostics. I also keep exploring Java through small, tested projects.
 
-**Backend и Frontend**
+### What I use
 
-<p>
-  <img src="https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white"/>
-  <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black"/>
-  <img src="https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=node.js&logoColor=white"/>
-</p>
+| Area | Tools and technologies |
+| :--- | :--- |
+| Languages | Python · Rust · Go · TypeScript / JavaScript · Java |
+| Backend & data | FastAPI · PostgreSQL · SQLAlchemy · REST APIs |
+| Frontend | React · Vite · Tailwind CSS |
+| Delivery & systems | Linux · Docker · GitHub Actions · Git · automated tests |
+| Applied ML | pandas · scikit-learn · XGBoost · SHAP |
 
-**Данные и ML**
+<sub>These are tools I've used in projects, not a claim of equal depth in every technology.</sub>
 
-<p>
-  <img src="https://img.shields.io/badge/pandas-150458?style=flat-square&logo=pandas&logoColor=white"/>
-  <img src="https://img.shields.io/badge/scikit--learn-F7931E?style=flat-square&logo=scikit-learn&logoColor=white"/>
-  <img src="https://img.shields.io/badge/NumPy-013243?style=flat-square&logo=numpy&logoColor=white"/>
-</p>
+### Selected work
 
-**Инструменты и инфраструктура**
+| Project | What it shows |
+| :--- | :--- |
+| [Soup Wall ↗](https://github.com/SoupTeam/soup-wall) | Contributions to source-aware CI, verified build reuse, installed-pilot tooling and provider transport diagnostics in a security-focused codebase. |
+| [Incident Predictor ↗](https://github.com/Zaywoo66/Incident-predictor) | Infrastructure incident prediction from system metrics, with XGBoost/SHAP, a FastAPI service and a React interface. |
+| [Smart Test Trigger ↗](https://github.com/Zaywoo66/Smart-test-trigger) | A GitHub Action that uses Python AST dependency analysis to select affected tests, with conservative full-suite fallback. |
+| [TAU-PARK ↗](https://github.com/Zaywoo66/tau-park-project) | A booking application with a React/TypeScript frontend and a FastAPI/PostgreSQL backend. |
+| [Log Analyzer ↗](https://github.com/Zaywoo66/log-analyzer) | A Go CLI that streams nginx access logs and reports traffic, status codes and latency percentiles. |
 
-<p>
-  <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white"/>
-  <img src="https://img.shields.io/badge/GitHub_Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Linux-FCC624?style=flat-square&logo=linux&logoColor=black"/>
-</p>
+### How I work
 
----
+I care about **explicit scope**, **useful failure messages** and **tests that exercise the real boundary**. When a result depends on a particular source revision or environment, I try to make that dependency visible instead of calling a partial run “green.”
 
-### Избранные проекты
+### По-русски
 
-**Incident Predictor** — ML-модель для предсказания инцидентов и сбоев на сервере, работает по принципу watchdog: анализирует метрики системы и заранее сигнализирует о риске сбоя, до того как он произойдёт.
+Привет, я Алихан. Разрабатываю серверные сервисы и инструменты для разработчиков. Сейчас особенно интересуюсь надёжным CI, воспроизводимой сборкой и безопасными границами выполнения. Работаю с Python, Go, TypeScript и Rust; изучаю Java на небольших проектах с тестами. В [Soup Wall](https://github.com/SoupTeam/soup-wall) участвую в задачах по проверке сборок, CI и подготовке Linux-окружения. Выше — проекты с исходным кодом, по которым можно посмотреть мой подход к работе.
 
-<p align="center">
-  <a href="https://github.com/Zaywoo66/Incident-predictor ">
-    <img src="https://github-readme-stats.vercel.app/api/pin/?username=Zaywoo66&repo=Smart-test-trigger &theme=default" />
-  </a>
-</p>
-
-
-
----
-
-### Статистика GitHub
-
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=Zaywoo66&show_icons=true&theme=default&hide_border=true" height="165"/>
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=Zaywoo66&theme=default&hide_border=true" height="165"/>
-</p>
-
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Zaywoo66&layout=compact&theme=default&hide_border=true" height="165"/>
-</p>
-
----
-
-<p align="center">
-  <em>Сейчас в фокусе: архитектура бэкенда, контейнеризованный деплой, изучение DevOps и его пересечения с ML.</em>
-</p>
-
-<br><br>
-
----
-
-<a id="english-version"></a>
-
-<h1 align="center">Hi, I'm Alikhan </h1>
-
-<p align="center">
-  <em>Backend & Full-Stack Developer | Learning DevOps and Machine Learning</em>
-</p>
-
-<p align="center">
-  <a href="https://t.me/waattoo"><img src="https://img.shields.io/badge/Telegram-2CA5E0?style=flat-square&logo=telegram&logoColor=white"/></a>
-  <a href="mailto:kokenaliko@gmail.com"><img src="https://img.shields.io/badge/Email-D14836?style=flat-square&logo=gmail&logoColor=white"/></a>
-  <a href="https://linkedin.com/in/your-linkedin"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=flat-square&logo=linkedin&logoColor=white"/></a>
-</p>
-
----
-
-### About Me
-
-- Building backend systems with **FastAPI**, gradually picking up **DevOps** practices (Docker, CI/CD, IaC)
-- Learning **Machine Learning** fundamentals: **scikit-learn**, **pandas**
-- Comfortable across the stack — from React interfaces to Go services and containerized backends
-- Open to backend / DevOps-adjacent roles and collaborations
-
----
-
-### Tech Stack
-
-**Languages**
-
-<p>
-  <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Go-00ADD8?style=flat-square&logo=go&logoColor=white"/>
-  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black"/>
-  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white"/>
-</p>
-
-**Backend & Frontend**
-
-<p>
-  <img src="https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white"/>
-  <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black"/>
-  <img src="https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=node.js&logoColor=white"/>
-</p>
-
-**Data & ML**
-
-<p>
-  <img src="https://img.shields.io/badge/pandas-150458?style=flat-square&logo=pandas&logoColor=white"/>
-  <img src="https://img.shields.io/badge/scikit--learn-F7931E?style=flat-square&logo=scikit-learn&logoColor=white"/>
-  <img src="https://img.shields.io/badge/NumPy-013243?style=flat-square&logo=numpy&logoColor=white"/>
-</p>
-
-**Tools & Infrastructure**
-
-<p>
-  <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white"/>
-  <img src="https://img.shields.io/badge/GitHub_Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Linux-FCC624?style=flat-square&logo=linux&logoColor=black"/>
-</p>
-
----
-
-### Featured Projects
-
-**Incident Predictor** — an ML model that predicts server incidents and failures, working as a watchdog: it analyzes system metrics and flags failure risk before it actually happens.
-
-<p align="center">
-  <a href="https://github.com/Zaywoo66/Incident-predictor">
-    <img src="https://github-readme-stats.vercel.app/api/pin/?username=Zaywoo66&repo=Smart-test-trigger&theme=default" />
-  </a>
-</p>
-
-
----
-
-### GitHub Stats
-
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=Zaywoo66&show_icons=true&theme=default&hide_border=true" height="165"/>
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=Zaywoo66&theme=default&hide_border=true" height="165"/>
-</p>
-
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Zaywoo66&layout=compact&theme=default&hide_border=true" height="165"/>
-</p>
-
----
-
-<p align="center">
-  <em>Currently focused on: backend architecture, containerized deployments, and bridging DevOps into ML workflows.</em>
-</p>
+<div align="center">
+  <sub>Have a project or an interesting engineering problem? <a href="https://t.me/waattoo">Let's talk.</a></sub>
+</div>
