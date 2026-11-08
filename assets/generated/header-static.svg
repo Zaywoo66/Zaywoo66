@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 220" role="img" aria-labelledby="title desc">
+<title id="title">Alikhan — full-stack developer</title>
+<desc id="desc">React, FastAPI and PostgreSQL connected by a request and response flow.</desc>
+<style>svg{font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+@keyframes drift-a{50%{transform:translate(24px,-10px);opacity:.72}}
+@keyframes drift-b{50%{transform:translate(-18px,12px);opacity:.55}}
+.blob-a{animation:drift-a 18s ease-in-out infinite}
+.blob-b{animation:drift-b 16s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.blob-a,.blob-b,.particle,.packet,.ring{animation:none!important}.packet,.ring{opacity:0!important}}
+@keyframes to-api{0%{transform:translate(675px,108px);opacity:1}24%{transform:translate(770px,108px);opacity:1}25%,100%{transform:translate(770px,108px);opacity:0}}
+@keyframes to-db{0%,24%{transform:translate(885px,108px);opacity:0}25%{transform:translate(885px,108px);opacity:1}49%{transform:translate(980px,108px);opacity:1}50%,100%{transform:translate(980px,108px);opacity:0}}
+@keyframes from-db{0%,49%{transform:translate(980px,108px);opacity:0}50%{transform:translate(980px,108px);opacity:1}74%{transform:translate(885px,108px);opacity:1}75%,100%{transform:translate(885px,108px);opacity:0}}
+@keyframes from-api{0%,74%{transform:translate(770px,108px);opacity:0}75%{transform:translate(770px,108px);opacity:1}99%{transform:translate(675px,108px);opacity:1}100%{transform:translate(675px,108px);opacity:0}}
+@keyframes pulse-api{0%,22%,27%,72%,77%,100%{opacity:0}24%,74%{opacity:.7}}
+@keyframes pulse-db{0%,47%,52%,100%{opacity:0}49%{opacity:.7}}
+@keyframes pulse-react{0%,97%{opacity:0}99%{opacity:.7}100%{opacity:0}}
+.p1{animation:to-api 7s linear infinite}.p2{animation:to-db 7s linear infinite}
+.p3{animation:from-db 7s linear infinite}.p4{animation:from-api 7s linear infinite}
+.api-ring{animation:pulse-api 7s linear infinite}.db-ring{animation:pulse-db 7s linear infinite}
+.react-ring{animation:pulse-react 7s linear infinite}
+*{animation:none!important}.packet,.ring{display:none!important}</style><defs>
+<linearGradient id="background" x2="1" y2="1"><stop stop-color="#0b1021"/><stop offset="1" stop-color="#76e4df" stop-opacity=".24"/></linearGradient>
+<pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M30 0H0V30" fill="none" stroke="#f5f7ff" stroke-opacity=".09"/></pattern>
+<filter id="soft"><feGaussianBlur stdDeviation="32"/></filter></defs>
+<rect width="1200" height="220" rx="22" fill="url(#background)"/>
+<rect width="1200" height="220" rx="22" fill="url(#grid)"/>
+<g filter="url(#soft)"><circle class="blob-a" cx="690" cy="34" r="82" fill="#76e4df" opacity=".22"/>
+<circle class="blob-b" cx="1080" cy="183" r="87" fill="#ed97c7" opacity=".24"/></g><text x="42" y="91" fill="#f5f7ff" font-size="36" font-weight="650">Alikhan</text>
+<text x="42" y="126" fill="#f5f7ff" opacity=".85" font-size="18">Full-stack: Python/FastAPI · React/TypeScript</text>
+<text x="42" y="151" fill="#f5f7ff" opacity=".56" font-size="13">Astana, Kazakhstan</text><g fill="none" stroke="#76e4df" stroke-opacity=".52" stroke-width="2">
+<path d="M675 108H770M885 108H980"/></g>
+<g class="packet p1" fill="#76e4df"><circle cx="-13" r="3" opacity=".25"/><circle cx="-6" r="3" opacity=".48"/><circle r="5"/></g>
+<g class="packet p2" fill="#76e4df"><circle cx="-13" r="3" opacity=".25"/><circle cx="-6" r="3" opacity=".48"/><circle r="5"/></g>
+<g class="packet p3" fill="#f3c789"><circle cx="13" r="2" opacity=".25"/><circle cx="6" r="2" opacity=".48"/><circle r="4"/></g>
+<g class="packet p4" fill="#f3c789"><circle cx="13" r="2" opacity=".25"/><circle cx="6" r="2" opacity=".48"/><circle r="4"/></g>
+<g fill="#0b1021" fill-opacity=".78" stroke="#f5f7ff" stroke-opacity=".28">
+<rect x="570" y="68" width="105" height="80" rx="13"/>
+<rect x="770" y="68" width="115" height="80" rx="13"/>
+<rect x="980" y="68" width="145" height="80" rx="13"/></g>
+<g fill="none" stroke-width="3">
+<path d="M601 94h15l8 10-8 10h-15l-8-10z" stroke="#76e4df"/>
+<path d="M804 94h26m-26 8h18m-18 8h23" stroke="#ed97c7" stroke-linecap="round"/>
+<ellipse cx="1025" cy="96" rx="19" ry="5" stroke="#f3c789"/>
+<path d="M1006 96v15c0 7 38 7 38 0V96" stroke="#f3c789"/></g>
+<g fill="#f5f7ff" font-size="16" font-weight="600">
+<text x="586" y="135">React</text><text x="789" y="135">FastAPI</text>
+<text x="996" y="135">PostgreSQL</text></g>
+<g class="ring react-ring" fill="none" stroke="#76e4df" stroke-width="2"><rect x="566" y="64" width="113" height="88" rx="16"/></g>
+<g class="ring api-ring" fill="none" stroke="#ed97c7" stroke-width="2"><rect x="766" y="64" width="123" height="88" rx="16"/></g>
+<g class="ring db-ring" fill="none" stroke="#f3c789" stroke-width="2"><rect x="976" y="64" width="153" height="88" rx="16"/></g></svg>
