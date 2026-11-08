@@ -2,23 +2,15 @@
   <img src="assets/profile-cover.svg" alt="Алихан — backend и инструменты для разработчиков на фоне вечернего города" width="100%">
 </p>
 
-<p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&amp;weight=500&amp;size=18&amp;duration=3500&amp;pause=1400&amp;color=8CB9DC&amp;center=true&amp;vCenter=true&amp;width=720&amp;height=42&amp;lines=Backend+%2F+developer+tools;Linux+%2F+CI+%2F+secure+systems" alt="Backend, developer tools, Linux, CI, secure systems">
-</p>
-
-<p align="center">
-  <a href="https://t.me/waattoo">Telegram</a> ·
-  <a href="mailto:kokenovalihan07@gmail.com">Email</a> ·
-  <a href="https://github.com/Zaywoo66?tab=repositories">Репозитории</a>
-</p>
-
-### Привет, я Алихан
+<h3 align="center">Привет, я Алихан</h3>
 
 Я из Астаны. Пишу серверную часть и инструменты для разработчиков. Мне нравится разбираться в сбоях, которые лежат где-то между кодом, Linux и CI: найти причину, исправить её и оставить проверку, которая не даст проблеме вернуться.
 
 В моих репозиториях есть Python API, интерфейсы на React, утилиты на Go и командные проекты.
 
-### Что я сделал
+---
+
+<h3 align="center">Проекты</h3>
 
 - **[Soup Wall](https://github.com/SoupTeam/soup-wall)** — мой прежний вклад в Linux-инструменты, проверки CI и диагностику для установленного пилота. `Rust` `Python`
 - **[Smart Test Trigger](https://github.com/Zaywoo66/Smart-test-trigger)** — GitHub Action для выбора тестов по изменениям; при неопределённости запускает полный набор. `Python`
@@ -26,7 +18,9 @@
 - **[Log Analyzer](https://github.com/Zaywoo66/log-analyzer)** — потоковый разбор nginx-логов из командной строки. `Go`
 - **[TAU-PARK](https://github.com/Zaywoo66/tau-park-project)** — приложение для бронирования. `FastAPI` `PostgreSQL` `React`
 
-### Технологии
+---
+
+<h3 align="center">Технологии</h3>
 
 <p align="center">
   <img src="https://icon-marquee.giann.dev/v1/marquee?i=rust,python,go,typescript,react,postgresql,docker,github&amp;width=720" alt="Анимированная лента: Rust, Python, Go, TypeScript, React, PostgreSQL, Docker, GitHub" width="100%">
@@ -34,21 +28,31 @@
 
 Rust · Python · Go · TypeScript · React · FastAPI · PostgreSQL · Docker · GitHub Actions
 
-### Активность на GitHub
+---
 
-<p align="center">
-  <img src="https://streak-stats.demolab.com?user=Zaywoo66&amp;theme=tokyonight&amp;hide_border=true" alt="Анимированная статистика публичных вкладов и серий активности Zaywoo66" width="495">
-</p>
+<h3 align="center">Активность на GitHub</h3>
+
 <p align="center">
   <img src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=Zaywoo66&amp;theme=tokyonight" alt="Публичная статистика GitHub: звёзды, коммиты, pull requests и вклад в проекты" width="340">
   <img src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=Zaywoo66&amp;theme=tokyonight" alt="Языки в публичных коммитах Zaywoo66" width="340">
 </p>
+<p align="center">
+  <img src="https://streak-stats.demolab.com?user=Zaywoo66&amp;theme=tokyonight&amp;hide_border=true" alt="Анимированная статистика публичных вкладов и серий активности Zaywoo66" width="495">
+</p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Zaywoo66/Zaywoo66/output/contribution-snake.svg" alt="Анимированный график публичных вкладов Zaywoo66" width="100%">
+</p>
 
-<sub>Карточки учитывают публичную активность и могут обновляться с задержкой. Полный график вкладов GitHub — ниже на странице.</sub>
+<sub>Сторонние карточки показывают публичные данные с задержкой, поэтому их счётчики могут отличаться от встроенного графика GitHub ниже.</sub>
 
-### На связи
+---
 
-Если хочешь обсудить проект или просто поговорить о разработке, напиши мне в [Telegram](https://t.me/waattoo) или на [почту](mailto:kokenovalihan07@gmail.com).
+<h3 align="center">На связи</h3>
+
+<p align="center">
+  <a href="https://t.me/waattoo"><img src="https://img.shields.io/badge/Telegram-0D1117?style=for-the-badge&amp;logo=telegram&amp;logoColor=26A5E4" alt="Telegram"></a>
+  <a href="mailto:kokenovalihan07@gmail.com"><img src="https://img.shields.io/badge/Email-0D1117?style=for-the-badge&amp;logo=gmail&amp;logoColor=EA4335" alt="Email"></a>
+</p>
 
 <details>
 <summary>English version</summary>
