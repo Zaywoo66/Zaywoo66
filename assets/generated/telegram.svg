@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 94" role="img" aria-labelledby="title desc">
+<title id="title">Telegram</title><desc id="desc">Contact link: Telegram @waattoo</desc>
+<style>svg { --bg:#121b31; --text:#f5f7ff; --line:#42577d; --accent:#76e4df; font-family:system-ui,-apple-system,"Segoe UI",sans-serif; }
+@media (prefers-color-scheme:light) { svg { --bg:#e9eef9; --text:#18223d; --line:#91a5c5; --accent:#087f82; } }</style>
+<rect x="1" y="1" width="278" height="92" rx="15" fill="var(--bg)" stroke="var(--line)" stroke-width="2"/>
+<path d="m30 47 31-13-9 31-8-12-7 7 1-13 19-9-23 12z" fill="var(--accent)"/><text x="81" y="59" fill="var(--text)" font-size="29" font-weight="650">Telegram</text>
+</svg>

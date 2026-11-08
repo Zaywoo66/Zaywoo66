@@ -1,66 +1,79 @@
 <p align="center">
-  <img src="assets/profile-cover.svg" alt="Алихан — backend и инструменты для разработчиков на фоне вечернего города" width="100%">
+  <img src="assets/generated/header.svg" alt="Alikhan — Full-stack: Python/FastAPI · React/TypeScript" width="100%">
 </p>
 
-<h3 align="center">Привет, я Алихан</h3>
+## About
 
-Я из Астаны. Пишу серверную часть и инструменты для разработчиков. Мне нравится разбираться в сбоях, которые лежат где-то между кодом, Linux и CI: найти причину, исправить её и оставить проверку, которая не даст проблеме вернуться.
+Hi, I'm Alikhan. I live in Astana and I'm a first-year student at AITU.
 
-В моих репозиториях есть Python API, интерфейсы на React, утилиты на Go и командные проекты.
+I write Python and TypeScript. On the backend that's FastAPI and PostgreSQL,
+on the frontend React. I'm looking for my first job or internship: full-stack,
+or either side of it. I want to build a feature end to end, from the table in
+the database to the button on the screen.
 
----
+What I've made so far: a booking app (TAU-PARK), an incident predictor that
+forecasts server failures from metrics and has its own API and interface, a Go
+tool that parses nginx logs, and a GitHub Action that runs only the tests
+affected by a change.
 
-<h3 align="center">Проекты</h3>
+I like finding out why something broke, fixing it, and leaving a test behind so
+it doesn't come back.
 
-- **[Smart Test Trigger](https://github.com/Zaywoo66/Smart-test-trigger)** — GitHub Action для выбора тестов по изменениям; при неопределённости запускает полный набор. `Python`
-- **[Incident Predictor](https://github.com/Zaywoo66/Incident-predictor)** — прогноз сбоев по метрикам сервера, API и интерфейс. `FastAPI` `React`
-- **[Log Analyzer](https://github.com/Zaywoo66/log-analyzer)** — потоковый разбор nginx-логов из командной строки. `Go`
-- **[TAU-PARK](https://github.com/Zaywoo66/tau-park-project)** — приложение для бронирования. `FastAPI` `PostgreSQL` `React`
-- **[Soup Wall](https://github.com/SoupTeam/soup-wall)** — мой прежний вклад в Linux-инструменты, проверки CI и диагностику для установленного пилота. `Rust` `Python`
-
----
-
-<h3 align="center">Технологии</h3>
-
-<p align="center">
-  <img src="https://icon-marquee.giann.dev/v1/marquee?i=rust,python,go,typescript,react,postgresql,docker,github&amp;width=720" alt="Анимированная лента: Rust, Python, Go, TypeScript, React, PostgreSQL, Docker, GitHub" width="100%">
-</p>
-
-Rust · Python · Go · TypeScript · React · FastAPI · PostgreSQL · Docker · GitHub Actions
-
----
-
-<h3 align="center">Активность на GitHub</h3>
-
-<p align="center">
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=Zaywoo66&amp;theme=tokyonight" alt="Публичная статистика GitHub: звёзды, коммиты, pull requests и вклад в проекты" width="340">
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=Zaywoo66&amp;theme=tokyonight" alt="Языки в публичных коммитах Zaywoo66" width="340">
-</p>
-<p align="center">
-  <img src="https://streak-stats.demolab.com?user=Zaywoo66&amp;theme=tokyonight&amp;hide_border=true" alt="Анимированная статистика публичных вкладов и серий активности Zaywoo66" width="495">
-</p>
-<p align="center">
-  <img src="https://raw.githubusercontent.com/Zaywoo66/Zaywoo66/output/pacman-contribution-graph-dark.svg?v=1" alt="Анимированный график публичных вкладов Zaywoo66 в стиле Pac-Man" width="100%">
-</p>
-
-<sub>Сторонние карточки показывают публичные данные с задержкой, поэтому их счётчики могут отличаться от встроенного графика GitHub ниже.</sub>
-
----
-
-<h3 align="center">На связи</h3>
-
-<p align="center">
-  <a href="https://t.me/waattoo"><img src="https://img.shields.io/badge/Telegram-0D1117?style=for-the-badge&amp;logo=telegram&amp;logoColor=26A5E4" alt="Telegram"></a>
-  <a href="mailto:kokenovalihan07@gmail.com"><img src="https://img.shields.io/badge/Email-0D1117?style=for-the-badge&amp;logo=gmail&amp;logoColor=EA4335" alt="Email"></a>
-</p>
+Telegram: @waattoo
 
 <details>
-<summary>English version</summary>
+<summary>Русская версия</summary>
 
-Hi, I'm Alikhan from Astana. I build backend services and developer tools. I enjoy tracing failures across code, Linux and CI, fixing the cause and leaving a test that catches it next time.
+Привет, я Алихан. Живу в Астане, учусь на первом курсе AITU.
 
-My past contributions include [Soup Wall](https://github.com/SoupTeam/soup-wall). My own projects include a [test-selection GitHub Action](https://github.com/Zaywoo66/Smart-test-trigger), an [incident prediction app](https://github.com/Zaywoo66/Incident-predictor) and a [Go log analyzer](https://github.com/Zaywoo66/log-analyzer).
+Пишу на Python и TypeScript. Бэкенд на FastAPI и PostgreSQL, фронтенд на React.
+Ищу первую работу или стажировку: full-stack или любую из двух сторон. Хочу
+делать фичу целиком, от таблицы в базе до кнопки на экране.
 
-Reach me on [Telegram](https://t.me/waattoo) or by [email](mailto:kokenovalihan07@gmail.com).
+Что уже сделал: приложение для бронирования (TAU-PARK), прогноз сбоев по
+метрикам сервера с собственным API и интерфейсом, утилиту на Go для разбора
+nginx-логов и GitHub Action, который запускает только те тесты, которых коснулись
+изменения.
+
+Мне нравится выяснять, почему что-то сломалось, чинить это и оставлять тест,
+чтобы оно не вернулось.
+
+Telegram: @waattoo
 
 </details>
+
+## Projects
+
+- **[TAU-PARK](https://github.com/Zaywoo66/tau-park-project)** — A glamping booking API with PostgreSQL and a separate React catalog interface. `Python` `FastAPI` `PostgreSQL` `React` `TypeScript`
+- **[Incident Predictor](https://github.com/Zaywoo66/Incident-predictor)** — Forecasts service failures from metrics through an API and dashboard; the model files must be generated before the Compose run. `Python` `FastAPI` `React` `Docker Compose`
+- **[Log Analyzer](https://github.com/Zaywoo66/log-analyzer)** — Parses nginx access logs and reports top IPs, status codes and latency percentiles. `Go`
+- **[Smart Test Trigger](https://github.com/Zaywoo66/Smart-test-trigger)** — A GitHub Action that selects Python tests affected by a change. `Python` `GitHub Actions`
+
+Past contribution: [Soup Wall](https://github.com/SoupTeam/soup-wall) (Linux tooling, CI checks, diagnostics for an installed pilot).
+
+## Stack
+
+- **Backend:** Python · FastAPI · PostgreSQL · Go
+- **Frontend:** React · TypeScript · Vite · Tailwind CSS
+- **Tools:** Docker · GitHub Actions
+
+## Activity
+
+<p align="center">
+  <img src="assets/generated/stats.svg" alt="Public GitHub repository and received-star counts, with the snapshot date" width="600">
+</p>
+<p align="center">
+  <picture>
+    <source media="(prefers-reduced-motion: reduce) and (prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Zaywoo66/Zaywoo66/output/pacman-contribution-graph-dark-static.svg">
+    <source media="(prefers-reduced-motion: reduce)" srcset="https://raw.githubusercontent.com/Zaywoo66/Zaywoo66/output/pacman-contribution-graph-static.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Zaywoo66/Zaywoo66/output/pacman-contribution-graph-dark.svg">
+    <img src="https://raw.githubusercontent.com/Zaywoo66/Zaywoo66/output/pacman-contribution-graph.svg" alt="Animated Pac-Man path through Alikhan's public GitHub contribution calendar" width="100%">
+  </picture>
+</p>
+
+## Contact
+
+<p align="center">
+  <a href="https://t.me/waattoo"><img src="assets/generated/telegram.svg" alt="Telegram @waattoo" width="140"></a>
+  <a href="mailto:kokenovalihan07@gmail.com"><img src="assets/generated/email.svg" alt="Email Alikhan" width="140"></a>
+</p>

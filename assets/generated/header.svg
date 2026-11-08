@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" role="img" aria-labelledby="title desc">
+<title id="title">Alikhan — full-stack developer</title>
+<desc id="desc">A dark or light terminal-inspired header with Alikhan's name and Python/FastAPI and React/TypeScript focus.</desc>
+<style>
+svg { --bg:#0b1021; --panel:#121b31; --text:#f5f7ff; --muted:#b9c7df; --line:#42577d; --cyan:#76e4df; --pink:#ed97c7; --gold:#f3c789; font-family:system-ui,-apple-system,"Segoe UI",sans-serif; }
+@media (prefers-color-scheme:light) { svg { --bg:#f5f7ff; --panel:#e9eef9; --text:#18223d; --muted:#415575; --line:#91a5c5; --cyan:#087f82; --pink:#ae397e; --gold:#9b5b11; } }
+@keyframes travel { to { stroke-dashoffset:-84; } }
+@keyframes breathe { 50% { opacity:.42; } }
+.trace { animation:travel 10s linear infinite; }
+.glow { animation:breathe 8s ease-in-out infinite; }
+@media (prefers-reduced-motion:reduce) { .trace,.glow { animation:none; } }
+</style>
+<rect width="760" height="300" rx="22" fill="var(--bg)"/>
+<rect x="18" y="18" width="724" height="264" rx="16" fill="var(--panel)" stroke="var(--line)"/>
+<circle cx="53" cy="50" r="6" fill="var(--pink)"/><circle cx="74" cy="50" r="6" fill="var(--gold)"/><circle cx="95" cy="50" r="6" fill="var(--cyan)"/>
+<path d="M22 76h716" stroke="var(--line)"/>
+<text x="48" y="118" fill="var(--cyan)" font-size="20" letter-spacing="3">ASTANA / KAZAKHSTAN</text>
+<text x="44" y="203" fill="var(--text)" font-size="86" font-weight="750">Alikhan.</text>
+<text x="48" y="250" fill="var(--muted)" font-size="28">Full-stack: Python/FastAPI · React/TypeScript</text>
+<path d="M581 108h124m-94 26h94m-67 26h67" stroke="var(--line)" stroke-width="3" stroke-linecap="round"/>
+<path class="trace" d="M581 108h124m-94 26h94m-67 26h67" stroke="var(--pink)" stroke-width="3" stroke-linecap="round" stroke-dasharray="42 240"/>
+<circle class="glow" cx="710" cy="50" r="5" fill="var(--cyan)"/>
+</svg>
