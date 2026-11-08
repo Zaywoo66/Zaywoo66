@@ -13,7 +13,7 @@
 
 ## About
 
-Hi, I'm Alikhan. I live in Astana and I'm a first-year student at AITU.
+Hi, I'm Alikhan. I live in Astana and I'm a second-year student at AITU.
 
 I write Python and TypeScript. On the backend that's FastAPI and PostgreSQL,
 on the frontend React. I'm looking for my first job or internship: full-stack,
@@ -33,7 +33,7 @@ Telegram: @waattoo
 <details>
 <summary>Русская версия</summary>
 
-Привет, я Алихан. Живу в Астане, учусь на первом курсе AITU.
+Привет, я Алихан. Живу в Астане, учусь на втором курсе AITU.
 
 Пишу на Python и TypeScript. Бэкенд на FastAPI и PostgreSQL, фронтенд на React.
 Ищу первую работу или стажировку: full-stack или любую из двух сторон. Хочу
