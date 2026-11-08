@@ -1,0 +1,37 @@
+name: Update contribution animation
+
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/contribution-animation.yml]
+  schedule:
+    - cron: '23 4 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: contribution-animation
+  cancel-in-progress: false
+
+jobs:
+  render:
+    if: github.repository == 'Zaywoo66/Zaywoo66'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Render public contribution graph
+        uses: Platane/snk/svg-only@d8f6715049803e982ee5ff501b6b9b7d5deeb09b # v3.5.0
+        with:
+          github_user_name: Zaywoo66
+          outputs: |
+            dist/contribution-snake.svg?palette=github-dark&color_snake=#8cb9dc&color_dots=#0d1117,#1a2b42,#294563,#477299,#76a8d0
+
+      - name: Publish generated SVG
+        uses: crazy-max/ghaction-github-pages@1d6ee9b181a81033a16bd707a1401afa978daab4 # v5.0.0
+        with:
+          target_branch: output
+          build_dir: dist
+          commit_message: Update contribution animation
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
