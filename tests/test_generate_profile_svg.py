@@ -2,11 +2,13 @@ from datetime import datetime, timezone
 from pathlib import Path
 import tempfile
 import unittest
+import xml.etree.ElementTree as ET
 
 from scripts.generate_profile_svg import (
     MAX_SVG,
     badge_svg,
     header_svg,
+    mobile_header_svg,
     patch_pacman,
     public_stats,
     stats_svg,
@@ -40,19 +42,43 @@ class ProfileSvgTests(unittest.TestCase):
         self.assertEqual(public_stats(failed), ("n/a", "n/a"))
 
     def test_local_graphics_are_small_theme_aware_and_reduced_motion_safe(self):
-        graphics = (
-            header_svg(),
+        headers = tuple(header_svg(theme, variant) for theme in ("dark", "light")
+                        for variant in ("flow", "aurora"))
+        graphics = headers + (
             stats_svg("12", "4", datetime(2026, 11, 8, tzinfo=timezone.utc)),
-            badge_svg("Telegram", "telegram"),
-            badge_svg("Email", "email"),
-        )
+        ) + tuple(badge_svg(label, kind, theme) for label, kind in
+                  (("Telegram", "telegram"), ("Email", "email"), ("LinkedIn", "linkedin"))
+                  for theme in ("dark", "light"))
         for svg in graphics:
             self.assertLess(len(svg.encode("utf-8")), MAX_SVG)
-            self.assertIn("prefers-color-scheme:light", svg)
+            ET.fromstring(svg)
             self.assertNotIn("<image", svg)
-        self.assertIn("prefers-reduced-motion:reduce", graphics[0])
-        self.assertIn("prefers-reduced-motion:reduce", graphics[1])
+            self.assertNotIn("<script", svg)
+            self.assertIn("system-ui", svg)
+        for svg in headers:
+            self.assertIn('viewBox="0 0 1200 220"', svg)
+            self.assertIn("prefers-reduced-motion:reduce", svg)
+            self.assertIn("Astana, Kazakhstan", svg)
         self.assertIn("Full-stack: Python/FastAPI · React/TypeScript", graphics[0])
+        self.assertIn("@keyframes to-api", headers[0])
+        self.assertIn("PostgreSQL", headers[0])
+        self.assertEqual(headers[1].count('class="particle"'), 26)
+        self.assertIn("prefers-reduced-motion:reduce", graphics[4])
+        for theme in ("dark", "light"):
+            still = header_svg(theme, static=True)
+            ET.fromstring(still)
+            self.assertIn("*{animation:none!important}", still)
+            self.assertIn(".packet,.ring{display:none!important}", still)
+            mobile = mobile_header_svg(theme)
+            self.assertIn('viewBox="0 0 375 190"', mobile)
+            self.assertIn("prefers-reduced-motion:reduce", mobile)
+            self.assertLess(len(mobile.encode("utf-8")), MAX_SVG)
+            self.assertIn("*{animation:none!important}", mobile_header_svg(theme, True))
+            aurora_mobile = mobile_header_svg(theme, variant="aurora")
+            self.assertEqual(aurora_mobile.count('class="particle"'), 24)
+            self.assertIn("prefers-reduced-motion:reduce", aurora_mobile)
+            self.assertIn("*{animation:none!important}",
+                          mobile_header_svg(theme, True, "aurora"))
 
     def test_pacman_output_is_checked_and_motion_can_be_disabled(self):
         with tempfile.TemporaryDirectory() as temporary:

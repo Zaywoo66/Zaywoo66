@@ -93,30 +93,157 @@ def public_stats(fetch=github_json) -> tuple[str, str]:
         return public_repos, "n/a"
 
 
-def header_svg() -> str:
-    return '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" role="img" aria-labelledby="title desc">
+def header_svg(theme: str = "dark", variant: str = "flow", static: bool = False) -> str:
+    """A compact, theme-specific header with an optional saved aurora variant."""
+    if theme not in ("dark", "light") or variant not in ("flow", "aurora"):
+        raise ValueError("unsupported header variant")
+    palette = {
+        "dark": ("#0b1021", "#f5f7ff", "#76e4df", "#ed97c7", "#f3c789"),
+        "light": ("#f5f7ff", "#18223d", "#087f82", "#ae397e", "#9b5b11"),
+    }[theme]
+    bg, text, teal, pink, amber = palette
+    common_css = '''svg{font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+@keyframes drift-a{50%{transform:translate(24px,-10px);opacity:.72}}
+@keyframes drift-b{50%{transform:translate(-18px,12px);opacity:.55}}
+.blob-a{animation:drift-a 18s ease-in-out infinite}
+.blob-b{animation:drift-b 16s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.blob-a,.blob-b,.particle,.packet,.ring{animation:none!important}.packet,.ring{opacity:0!important}}'''
+    flow_css = '''@keyframes to-api{0%{transform:translate(675px,108px);opacity:1}24%{transform:translate(770px,108px);opacity:1}25%,100%{transform:translate(770px,108px);opacity:0}}
+@keyframes to-db{0%,24%{transform:translate(885px,108px);opacity:0}25%{transform:translate(885px,108px);opacity:1}49%{transform:translate(980px,108px);opacity:1}50%,100%{transform:translate(980px,108px);opacity:0}}
+@keyframes from-db{0%,49%{transform:translate(980px,108px);opacity:0}50%{transform:translate(980px,108px);opacity:1}74%{transform:translate(885px,108px);opacity:1}75%,100%{transform:translate(885px,108px);opacity:0}}
+@keyframes from-api{0%,74%{transform:translate(770px,108px);opacity:0}75%{transform:translate(770px,108px);opacity:1}99%{transform:translate(675px,108px);opacity:1}100%{transform:translate(675px,108px);opacity:0}}
+@keyframes pulse-api{0%,22%,27%,72%,77%,100%{opacity:0}24%,74%{opacity:.7}}
+@keyframes pulse-db{0%,47%,52%,100%{opacity:0}49%{opacity:.7}}
+@keyframes pulse-react{0%,97%{opacity:0}99%{opacity:.7}100%{opacity:0}}
+.p1{animation:to-api 7s linear infinite}.p2{animation:to-db 7s linear infinite}
+.p3{animation:from-db 7s linear infinite}.p4{animation:from-api 7s linear infinite}
+.api-ring{animation:pulse-api 7s linear infinite}.db-ring{animation:pulse-db 7s linear infinite}
+.react-ring{animation:pulse-react 7s linear infinite}'''
+    aurora_css = '''@keyframes float{50%{transform:translate(0px,-11px);opacity:.85}}
+.particle{animation:float 17s ease-in-out infinite}'''
+    css = common_css + "\n" + (flow_css if variant == "flow" else aurora_css)
+    if static:
+        # SVGs embedded with <img> do not consistently inherit motion settings.
+        css += "\n*{animation:none!important}.packet,.ring{display:none!important}"
+    background = f'''<defs>
+<linearGradient id="background" x2="1" y2="1"><stop stop-color="{bg}"/><stop offset="1" stop-color="{teal}" stop-opacity=".24"/></linearGradient>
+<pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M30 0H0V30" fill="none" stroke="{text}" stroke-opacity=".09"/></pattern>
+<filter id="soft"><feGaussianBlur stdDeviation="32"/></filter></defs>
+<rect width="1200" height="220" rx="22" fill="url(#background)"/>
+<rect width="1200" height="220" rx="22" fill="url(#grid)"/>
+<g filter="url(#soft)"><circle class="blob-a" cx="690" cy="34" r="82" fill="{teal}" opacity=".22"/>
+<circle class="blob-b" cx="1080" cy="183" r="87" fill="{pink}" opacity=".24"/></g>'''
+    name = f'''<text x="42" y="91" fill="{text}" font-size="36" font-weight="650">Alikhan</text>
+<text x="42" y="126" fill="{text}" opacity=".85" font-size="18">Full-stack: Python/FastAPI · React/TypeScript</text>
+<text x="42" y="151" fill="{text}" opacity=".56" font-size="13">Astana, Kazakhstan</text>'''
+    if variant == "flow":
+        content = f'''<g fill="none" stroke="{teal}" stroke-opacity=".52" stroke-width="2">
+<path d="M675 108H770M885 108H980"/></g>
+<g class="packet p1" fill="{teal}"><circle cx="-13" r="3" opacity=".25"/><circle cx="-6" r="3" opacity=".48"/><circle r="5"/></g>
+<g class="packet p2" fill="{teal}"><circle cx="-13" r="3" opacity=".25"/><circle cx="-6" r="3" opacity=".48"/><circle r="5"/></g>
+<g class="packet p3" fill="{amber}"><circle cx="13" r="2" opacity=".25"/><circle cx="6" r="2" opacity=".48"/><circle r="4"/></g>
+<g class="packet p4" fill="{amber}"><circle cx="13" r="2" opacity=".25"/><circle cx="6" r="2" opacity=".48"/><circle r="4"/></g>
+<g fill="{bg}" fill-opacity=".78" stroke="{text}" stroke-opacity=".28">
+<rect x="570" y="68" width="105" height="80" rx="13"/>
+<rect x="770" y="68" width="115" height="80" rx="13"/>
+<rect x="980" y="68" width="145" height="80" rx="13"/></g>
+<g fill="none" stroke-width="3">
+<path d="M601 94h15l8 10-8 10h-15l-8-10z" stroke="{teal}"/>
+<path d="M804 94h26m-26 8h18m-18 8h23" stroke="{pink}" stroke-linecap="round"/>
+<ellipse cx="1025" cy="96" rx="19" ry="5" stroke="{amber}"/>
+<path d="M1006 96v15c0 7 38 7 38 0V96" stroke="{amber}"/></g>
+<g fill="{text}" font-size="16" font-weight="600">
+<text x="586" y="135">React</text><text x="789" y="135">FastAPI</text>
+<text x="996" y="135">PostgreSQL</text></g>
+<g class="ring react-ring" fill="none" stroke="{teal}" stroke-width="2"><rect x="566" y="64" width="113" height="88" rx="16"/></g>
+<g class="ring api-ring" fill="none" stroke="{pink}" stroke-width="2"><rect x="766" y="64" width="123" height="88" rx="16"/></g>
+<g class="ring db-ring" fill="none" stroke="{amber}" stroke-width="2"><rect x="976" y="64" width="153" height="88" rx="16"/></g>'''
+    else:
+        particles = "".join(
+            f'<circle class="particle" cx="{570 + (i * 71) % 610}" cy="{22 + (i * 47) % 173}" '
+            f'r="{1 + i % 2}" fill="{teal if i % 3 else amber}" opacity=".55" '
+            f'style="animation-delay:-{i % 15}s"/>'
+            for i in range(26)
+        )
+        content = f'''<g filter="url(#soft)"><circle class="blob-a" cx="790" cy="96" r="105" fill="{pink}" opacity=".3"/>
+<circle class="blob-b" cx="1040" cy="88" r="115" fill="{teal}" opacity=".34"/></g>{particles}'''
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 220" role="img" aria-labelledby="title desc">
 <title id="title">Alikhan — full-stack developer</title>
-<desc id="desc">A dark or light terminal-inspired header with Alikhan's name and Python/FastAPI and React/TypeScript focus.</desc>
-<style>
-svg { --bg:#0b1021; --panel:#121b31; --text:#f5f7ff; --muted:#b9c7df; --line:#42577d; --cyan:#76e4df; --pink:#ed97c7; --gold:#f3c789; font-family:system-ui,-apple-system,"Segoe UI",sans-serif; }
-@media (prefers-color-scheme:light) { svg { --bg:#f5f7ff; --panel:#e9eef9; --text:#18223d; --muted:#415575; --line:#91a5c5; --cyan:#087f82; --pink:#ae397e; --gold:#9b5b11; } }
-@keyframes travel { to { stroke-dashoffset:-84; } }
-@keyframes breathe { 50% { opacity:.42; } }
-.trace { animation:travel 10s linear infinite; }
-.glow { animation:breathe 8s ease-in-out infinite; }
-@media (prefers-reduced-motion:reduce) { .trace,.glow { animation:none; } }
-</style>
-<rect width="760" height="300" rx="22" fill="var(--bg)"/>
-<rect x="18" y="18" width="724" height="264" rx="16" fill="var(--panel)" stroke="var(--line)"/>
-<circle cx="53" cy="50" r="6" fill="var(--pink)"/><circle cx="74" cy="50" r="6" fill="var(--gold)"/><circle cx="95" cy="50" r="6" fill="var(--cyan)"/>
-<path d="M22 76h716" stroke="var(--line)"/>
-<text x="48" y="118" fill="var(--cyan)" font-size="20" letter-spacing="3">ASTANA / KAZAKHSTAN</text>
-<text x="44" y="203" fill="var(--text)" font-size="86" font-weight="750">Alikhan.</text>
-<text x="48" y="250" fill="var(--muted)" font-size="28">Full-stack: Python/FastAPI · React/TypeScript</text>
-<path d="M581 108h124m-94 26h94m-67 26h67" stroke="var(--line)" stroke-width="3" stroke-linecap="round"/>
-<path class="trace" d="M581 108h124m-94 26h94m-67 26h67" stroke="var(--pink)" stroke-width="3" stroke-linecap="round" stroke-dasharray="42 240"/>
-<circle class="glow" cx="710" cy="50" r="5" fill="var(--cyan)"/>
-</svg>'''
+<desc id="desc">{('React, FastAPI and PostgreSQL connected by a request and response flow.' if variant == 'flow' else 'Soft aurora and drifting particles.')}</desc>
+<style>{css}</style>{background}{name}{content}</svg>'''
+
+
+def mobile_header_svg(theme: str = "dark", static: bool = False,
+                      variant: str = "flow") -> str:
+    """Keep the actual name and stack readable when GitHub narrows the README."""
+    if theme not in ("dark", "light") or variant not in ("flow", "aurora"):
+        raise ValueError("unsupported mobile header theme")
+    bg, text, teal, pink, amber = {
+        "dark": ("#0b1021", "#f5f7ff", "#76e4df", "#ed97c7", "#f3c789"),
+        "light": ("#f5f7ff", "#18223d", "#087f82", "#ae397e", "#9b5b11"),
+    }[theme]
+    if variant == "aurora":
+        particles = "".join(
+            f'<circle class="particle" cx="{18 + (i * 53) % 338}" '
+            f'cy="{99 + (i * 31) % 75}" r="{1 + i % 2}" '
+            f'fill="{teal if i % 3 else amber}" opacity=".65" '
+            f'style="animation-delay:-{i % 15}s"/>' for i in range(24)
+        )
+        still = '*{animation:none!important}' if static else ''
+        return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 375 190" role="img" aria-labelledby="title desc">
+<title id="title">Alikhan — full-stack developer</title><desc id="desc">Soft aurora and drifting particles.</desc>
+<style>svg{{font-family:system-ui,-apple-system,"Segoe UI",sans-serif}}
+@keyframes mobile-drift{{50%{{transform:translate(12px,-8px);opacity:.7}}}}
+@keyframes mobile-float{{50%{{transform:translate(0px,-9px);opacity:.9}}}}
+.blob{{animation:mobile-drift 18s ease-in-out infinite}}.particle{{animation:mobile-float 17s ease-in-out infinite}}
+@media (prefers-reduced-motion:reduce){{.blob,.particle{{animation:none!important}}}}{still}</style>
+<defs><linearGradient id="background" x2="1" y2="1"><stop stop-color="{bg}"/><stop offset="1" stop-color="{teal}" stop-opacity=".19"/></linearGradient>
+<filter id="soft"><feGaussianBlur stdDeviation="22"/></filter></defs>
+<rect width="375" height="190" rx="18" fill="url(#background)"/>
+<g filter="url(#soft)"><circle class="blob" cx="234" cy="134" r="52" fill="{pink}" opacity=".32"/>
+<circle class="blob" cx="328" cy="119" r="55" fill="{teal}" opacity=".32"/></g>
+<text x="18" y="39" fill="{text}" font-size="26" font-weight="650">Alikhan</text>
+<text x="18" y="65" fill="{text}" opacity=".85" font-size="13">Full-stack: Python/FastAPI · React/TypeScript</text>
+<text x="18" y="84" fill="{text}" opacity=".56" font-size="11">Astana, Kazakhstan</text>{particles}</svg>'''
+    css = '''svg{font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+@keyframes mobile-out-a{0%{transform:translate(100px,135px);opacity:1}24%{transform:translate(146px,135px);opacity:1}25%,100%{opacity:0}}
+@keyframes mobile-out-b{0%,24%{opacity:0}25%{transform:translate(228px,135px);opacity:1}49%{transform:translate(275px,135px);opacity:1}50%,100%{opacity:0}}
+@keyframes mobile-back-b{0%,49%{opacity:0}50%{transform:translate(275px,135px);opacity:1}74%{transform:translate(228px,135px);opacity:1}75%,100%{opacity:0}}
+@keyframes mobile-back-a{0%,74%{opacity:0}75%{transform:translate(146px,135px);opacity:1}99%{transform:translate(100px,135px);opacity:1}100%{opacity:0}}
+@keyframes mobile-api-pulse{0%,23%,27%,73%,77%,100%{opacity:0}25%,75%{opacity:.75}}
+@keyframes mobile-db-pulse{0%,48%,52%,100%{opacity:0}50%{opacity:.75}}
+@keyframes mobile-react-pulse{0%,97%,100%{opacity:0}99%{opacity:.75}}
+.p1{animation:mobile-out-a 7s linear infinite}.p2{animation:mobile-out-b 7s linear infinite}
+.p3{animation:mobile-back-b 7s linear infinite}.p4{animation:mobile-back-a 7s linear infinite}
+.api-ring{animation:mobile-api-pulse 7s linear infinite}
+.db-ring{animation:mobile-db-pulse 7s linear infinite}
+.react-ring{animation:mobile-react-pulse 7s linear infinite}
+@media (prefers-reduced-motion:reduce){.packet,.ring{animation:none!important;opacity:0!important}}'''
+    if static:
+        css += '\n*{animation:none!important}.packet,.ring{display:none!important}'
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 375 190" role="img" aria-labelledby="title desc">
+<title id="title">Alikhan — full-stack developer</title>
+<desc id="desc">React, FastAPI and PostgreSQL connected by a request and response flow.</desc>
+<style>{css}</style>
+<defs><linearGradient id="background" x2="1" y2="1"><stop stop-color="{bg}"/><stop offset="1" stop-color="{teal}" stop-opacity=".19"/></linearGradient>
+<pattern id="grid" width="22" height="22" patternUnits="userSpaceOnUse"><path d="M22 0H0V22" fill="none" stroke="{text}" stroke-opacity=".08"/></pattern></defs>
+<rect width="375" height="190" rx="18" fill="url(#background)"/><rect width="375" height="190" rx="18" fill="url(#grid)"/>
+<text x="18" y="39" fill="{text}" font-size="26" font-weight="650">Alikhan</text>
+<text x="18" y="65" fill="{text}" opacity=".85" font-size="13">Full-stack: Python/FastAPI · React/TypeScript</text>
+<text x="18" y="84" fill="{text}" opacity=".56" font-size="11">Astana, Kazakhstan</text>
+<path d="M100 135h46m82 0h47" fill="none" stroke="{teal}" stroke-opacity=".6" stroke-width="2"/>
+<g class="packet p1" fill="{teal}"><circle r="4"/></g><g class="packet p2" fill="{teal}"><circle r="4"/></g>
+<g class="packet p3" fill="{amber}"><circle r="3"/></g><g class="packet p4" fill="{amber}"><circle r="3"/></g>
+<g fill="{bg}" fill-opacity=".8" stroke="{text}" stroke-opacity=".28"><rect x="18" y="106" width="82" height="58" rx="10"/>
+<rect x="146" y="106" width="82" height="58" rx="10"/><rect x="275" y="106" width="82" height="58" rx="10"/></g>
+<g fill="none" stroke-width="2.5"><path d="M47 119h12l6 7-6 7H47l-6-7z" stroke="{teal}"/>
+<path d="M174 120h21m-21 6h16" stroke="{pink}" stroke-linecap="round"/>
+<ellipse cx="312" cy="123" rx="13" ry="4" stroke="{amber}"/><path d="M299 123v10c0 5 26 5 26 0v-10" stroke="{amber}"/></g>
+<g fill="{text}" font-size="11" font-weight="600"><text x="40" y="151">React</text>
+<text x="166" y="151">FastAPI</text><text x="282" y="151">PostgreSQL</text></g>
+<g class="ring react-ring" fill="none" stroke="{teal}" stroke-width="2"><rect x="16" y="104" width="86" height="62" rx="12"/></g>
+<g class="ring api-ring" fill="none" stroke="{pink}" stroke-width="2"><rect x="144" y="104" width="86" height="62" rx="12"/></g>
+<g class="ring db-ring" fill="none" stroke="{amber}" stroke-width="2"><rect x="273" y="104" width="86" height="62" rx="12"/></g></svg>'''
 
 
 def stats_svg(repos: str, stars: str, date: datetime) -> str:
@@ -143,21 +270,29 @@ svg {{ --bg:#0b1021; --panel:#121b31; --text:#f5f7ff; --muted:#b9c7df; --line:#4
 </svg>'''
 
 
-def badge_svg(label: str, kind: str) -> str:
+def badge_svg(label: str, kind: str, theme: str = "dark") -> str:
+    if theme not in ("dark", "light"):
+        raise ValueError("unsupported contact theme")
+    bg, text, accent, border = {
+        "dark": ("#0b1021", "#f5f7ff", "#76e4df", "#f5f7ff"),
+        "light": ("#f5f7ff", "#18223d", "#087f82", "#18223d"),
+    }[theme]
     if kind == "telegram":
-        mark = '<path d="m30 47 31-13-9 31-8-12-7 7 1-13 19-9-23 12z" fill="var(--accent)"/>'
+        mark = f'<path d="m23 38 34-14-8 32-9-10-8 8 2-12 18-13-24 12z" fill="{accent}"/>'
         detail = "Telegram @waattoo"
     elif kind == "email":
-        mark = '<rect x="29" y="37" width="32" height="24" rx="3" fill="none" stroke="var(--accent)" stroke-width="3"/><path d="m30 40 15 12 15-12" fill="none" stroke="var(--accent)" stroke-width="3"/>'
+        mark = f'<rect x="23" y="26" width="34" height="25" rx="4" fill="none" stroke="{accent}" stroke-width="2.5"/><path d="m25 29 15 11 15-11" fill="none" stroke="{accent}" stroke-width="2.5"/>'
         detail = "Email Alikhan"
+    elif kind == "linkedin":
+        mark = f'<rect x="22" y="22" width="36" height="34" rx="6" fill="none" stroke="{accent}" stroke-width="2.5"/><circle cx="31" cy="31" r="2.5" fill="{accent}"/><path d="M31 38v11m8 0V38m0 4c2-5 10-5 10 1v6" fill="none" stroke="{accent}" stroke-width="3" stroke-linecap="round"/>'
+        detail = "LinkedIn Alikhan Kokenov"
     else:
         raise ValueError("unknown badge")
-    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 94" role="img" aria-labelledby="title desc">
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 76" role="img" aria-labelledby="title desc">
 <title id="title">{label}</title><desc id="desc">Contact link: {detail}</desc>
-<style>svg {{ --bg:#121b31; --text:#f5f7ff; --line:#42577d; --accent:#76e4df; font-family:system-ui,-apple-system,"Segoe UI",sans-serif; }}
-@media (prefers-color-scheme:light) {{ svg {{ --bg:#e9eef9; --text:#18223d; --line:#91a5c5; --accent:#087f82; }} }}</style>
-<rect x="1" y="1" width="278" height="92" rx="15" fill="var(--bg)" stroke="var(--line)" stroke-width="2"/>
-{mark}<text x="81" y="59" fill="var(--text)" font-size="29" font-weight="650">{label}</text>
+<style>svg {{ font-family:system-ui,-apple-system,"Segoe UI",sans-serif; }}</style>
+<rect x="1" y="1" width="254" height="74" rx="20" fill="{bg}" stroke="{border}" stroke-opacity=".28" stroke-width="2"/>
+{mark}<text x="75" y="48" fill="{text}" font-size="26" font-weight="600">{label}</text>
 </svg>'''
 
 
@@ -200,9 +335,16 @@ def main() -> None:
     else:
         repos, stars = public_stats()
         write_svg(args.directory / "header.svg", header_svg())
+        write_svg(args.directory / "header-light.svg", header_svg("light"))
+        write_svg(args.directory / "header-static.svg", header_svg(static=True))
+        write_svg(args.directory / "header-light-static.svg", header_svg("light", static=True))
+        for theme, suffix in (("dark", ""), ("light", "-light")):
+            write_svg(args.directory / f"header-mobile{suffix}.svg", mobile_header_svg(theme))
+            write_svg(args.directory / f"header-mobile{suffix}-static.svg", mobile_header_svg(theme, True))
         write_svg(args.directory / "stats.svg", stats_svg(repos, stars, datetime.now(timezone.utc)))
-        write_svg(args.directory / "telegram.svg", badge_svg("Telegram", "telegram"))
-        write_svg(args.directory / "email.svg", badge_svg("Email", "email"))
+        for label, kind in (("Telegram", "telegram"), ("Email", "email"), ("LinkedIn", "linkedin")):
+            write_svg(args.directory / f"{kind}.svg", badge_svg(label, kind))
+            write_svg(args.directory / f"{kind}-light.svg", badge_svg(label, kind, "light"))
         print(f"Generated public profile SVGs: repositories={repos}, stars={stars}")
 
 

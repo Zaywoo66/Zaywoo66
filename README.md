@@ -1,5 +1,14 @@
 <p align="center">
-  <img src="assets/generated/header.svg" alt="Alikhan — Full-stack: Python/FastAPI · React/TypeScript" width="100%">
+  <picture>
+    <source media="(prefers-reduced-motion: reduce) and (max-width: 600px) and (prefers-color-scheme: light)" srcset="assets/generated/header-mobile-light-static.svg">
+    <source media="(prefers-reduced-motion: reduce) and (max-width: 600px)" srcset="assets/generated/header-mobile-static.svg">
+    <source media="(max-width: 600px) and (prefers-color-scheme: light)" srcset="assets/generated/header-mobile-light.svg">
+    <source media="(max-width: 600px)" srcset="assets/generated/header-mobile.svg">
+    <source media="(prefers-reduced-motion: reduce) and (prefers-color-scheme: light)" srcset="assets/generated/header-light-static.svg">
+    <source media="(prefers-reduced-motion: reduce)" srcset="assets/generated/header-static.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/generated/header-light.svg">
+    <img src="assets/generated/header.svg" alt="Alikhan — Full-stack: Python/FastAPI · React/TypeScript; React, FastAPI and PostgreSQL request flow" width="100%">
+  </picture>
 </p>
 
 ## About
@@ -74,6 +83,7 @@ Past contribution: [Soup Wall](https://github.com/SoupTeam/soup-wall) (Linux too
 ## Contact
 
 <p align="center">
-  <a href="https://t.me/waattoo"><img src="assets/generated/telegram.svg" alt="Telegram @waattoo" width="140"></a>
-  <a href="mailto:kokenovalihan07@gmail.com"><img src="assets/generated/email.svg" alt="Email Alikhan" width="140"></a>
+  <a href="https://t.me/waattoo"><picture><source media="(prefers-color-scheme: light)" srcset="assets/generated/telegram-light.svg"><img src="assets/generated/telegram.svg" alt="Telegram @waattoo" width="132"></picture></a>
+  <a href="mailto:kokenovalihan07@gmail.com"><picture><source media="(prefers-color-scheme: light)" srcset="assets/generated/email-light.svg"><img src="assets/generated/email.svg" alt="Email Alikhan" width="132"></picture></a>
+  <a href="https://www.linkedin.com/in/alikhan-kokenov-33b016345/"><picture><source media="(prefers-color-scheme: light)" srcset="assets/generated/linkedin-light.svg"><img src="assets/generated/linkedin.svg" alt="LinkedIn Alikhan Kokenov" width="132"></picture></a>
 </p>
