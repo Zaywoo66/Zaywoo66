@@ -11,9 +11,11 @@ import argparse
 import re
 from datetime import datetime, timezone
 import json
+import math
 import os
 from pathlib import Path
 import urllib.request
+import xml.etree.ElementTree as ET
 
 
 USER = "Zaywoo66"
@@ -23,24 +25,64 @@ SMIL_ELEMENT = re.compile(r"<animate(?:Transform|Motion)?\b[\s\S]*?/>")
 METADATA_ELEMENT = re.compile(r"<metadata>.*?</metadata>", re.DOTALL)
 
 
-def pacman_css(width: int, height: int) -> str:
-    """Animate only the existing Pac-Man sprite; leave contribution data intact."""
-    if not 600 <= width <= 2000 or not 100 <= height <= 400:
-        raise ValueError("unexpected Pac-Man canvas")
-    right = width - 60
-    lower = height - 55
-    return f'''<style>
-@keyframes pacman-travel {{
-  0% {{ transform: translate(0px, 35px); }}
-  46% {{ transform: translate({right}px, 35px); }}
-  54% {{ transform: translate({right}px, {lower}px); }}
-  100% {{ transform: translate(0px, {lower}px); }}
-}}
-#pacman {{ animation: pacman-travel 24s linear infinite alternate; }}
-@media (prefers-reduced-motion: reduce) {{
-  #pacman {{ animation: none; transform: translate(0px, 35px); }}
-}}
-</style>'''
+def pacman_route(element: ET.Element, width: int, height: int) -> tuple[str, tuple[int, int], str]:
+    """Keep the upstream maze route, reducing only collinear intermediate steps."""
+    motion = [child for child in element if child.attrib.get("type") == "translate"
+              and child.attrib.get("attributeName") == "transform"]
+    if len(motion) != 1:
+        raise ValueError("missing or duplicate maze route")
+    animation = motion[0]
+    duration = re.fullmatch(r"(\d+)ms", animation.attrib.get("dur", ""))
+    positions = animation.attrib.get("values", "").split(";")
+    times = animation.attrib.get("keyTimes", "").split(";")
+    if not duration or not 10_000 <= int(duration[1]) <= 180_000 or not 3 <= len(positions) <= 1000:
+        raise ValueError("unsupported maze animation")
+    if len(positions) != len(times):
+        raise ValueError("incomplete maze route")
+    try:
+        keys = [float(time) for time in times]
+    except ValueError as exc:
+        raise ValueError("invalid maze timing") from exc
+    if (keys[0] != 0 or keys[-1] != 1
+            or any(not math.isfinite(time) or not 0 <= time <= 1 for time in keys)
+            or any(a > b for a, b in zip(keys, keys[1:]))):
+        raise ValueError("invalid maze timing")
+    coords = []
+    for value in positions:
+        match = re.fullmatch(r"(-?\d+),(-?\d+)", value)
+        if match is None:
+            raise ValueError("invalid maze coordinate")
+        x, y = int(match[1]), int(match[2])
+        if not 0 <= x <= width or not 0 <= y <= height:
+            raise ValueError("maze route leaves canvas")
+        coords.append((x, y))
+    turns = [0]
+    for index in range(1, len(coords) - 1):
+        before = (coords[index][0] - coords[index - 1][0],
+                  coords[index][1] - coords[index - 1][1])
+        after = (coords[index + 1][0] - coords[index][0],
+                 coords[index + 1][1] - coords[index][1])
+        if before != after:
+            turns.append(index)
+    turns.append(len(coords) - 1)
+    frames = "".join(
+        f"{100 * index / (len(coords) - 1):.4f}%"
+        f"{{transform:translate({coords[index][0]}px,{coords[index][1]}px)}}"
+        for index in turns
+    )
+    return f"{int(duration[1]) / 1000:g}s", coords[0], frames
+
+
+def pacman_css(routes: dict[str, tuple[str, tuple[int, int], str]]) -> str:
+    selectors = []
+    rules = []
+    for actor, (duration, _start, frames) in routes.items():
+        rules.append(f"@keyframes route-{actor}{{{frames}}}")
+        rules.append(f"#{actor}{{animation:route-{actor} {duration} linear infinite alternate}}")
+        selectors.append(f"#{actor}")
+    rules.append("@media (prefers-reduced-motion:reduce){"
+                 + ",".join(selectors) + "{animation:none!important}}")
+    return "<style>" + "".join(rules) + "</style>"
 
 
 def github_json(path: str) -> object:
@@ -313,14 +355,53 @@ def patch_pacman(directory: Path) -> None:
         canvas = re.search(r'<svg\s+width="(\d+)"\s+height="(\d+)"', svg)
         if canvas is None or 'id="pacman"' not in svg:
             raise ValueError(f"unexpected Pac-Man canvas or sprite: {name}")
+        width, height = int(canvas[1]), int(canvas[2])
+        if not 600 <= width <= 2000 or not 100 <= height <= 400:
+            raise ValueError(f"unexpected Pac-Man canvas size: {name}")
+        root = ET.fromstring(svg)
+        routes = {}
+        for actor in ("pacman", "ghost0", "ghost1", "ghost2", "ghost3"):
+            actors = [item for item in root.iter() if item.attrib.get("id") == actor]
+            if len(actors) != 1:
+                raise ValueError(f"missing or duplicate maze actor: {actor}")
+            element = actors[0]
+            routes[actor] = pacman_route(element, width, height)
+            start = routes[actor][1]
+            opening = re.search(rf'<(?:path|g)\b[^>]*\bid="{actor}"[^>]*>', svg)
+            if opening is None:
+                raise ValueError(f"missing maze actor tag: {actor}")
+            tag = opening[0]
+            initial = f'transform="translate({start[0]},{start[1]})"'
+            if re.search(r'\btransform="[^"]*"', tag):
+                tag = re.sub(r'\btransform="[^"]*"', initial, tag, count=1)
+            else:
+                tag = tag[:-1] + f" {initial}>"
+            svg = svg[:opening.start()] + tag + svg[opening.end():]
+        for rect in root.iter():
+            if not rect.tag.endswith("rect"):
+                continue
+            fills = [child for child in rect if child.attrib.get("attributeName") == "fill"]
+            if not fills:
+                continue
+            if len(fills) != 1:
+                raise ValueError("ambiguous contribution cell")
+            cell_id = rect.attrib.get("id", "")
+            color = fills[0].attrib.get("values", "").split(";")[0]
+            if not re.fullmatch(r"c-\d+-\d+", cell_id) or not re.fullmatch(r"#[0-9a-fA-F]{6}", color):
+                raise ValueError("invalid contribution cell")
+            pattern = rf'(<rect\b[^>]*\bid="{cell_id}"[^>]*\bfill=")[^"]+'
+            svg, replaced = re.subn(pattern, lambda match: match[1] + color, svg, count=1)
+            if replaced != 1:
+                raise ValueError(f"missing contribution cell: {cell_id}")
         static_svg, removed = SMIL_ELEMENT.subn("", svg)
         static_svg = METADATA_ELEMENT.sub("", static_svg)
         if removed == 0 or re.search(r"<animate\b|<animateTransform\b|<animateMotion\b", static_svg):
             raise ValueError(f"unsupported animation element: {name}")
+        ET.fromstring(static_svg)
         static_name = name.replace(".svg", "-static.svg")
         write_svg(directory / static_name, static_svg.rstrip("\n"))
         animated_svg = static_svg.replace(
-            "</svg>", f"{pacman_css(int(canvas[1]), int(canvas[2]))}</svg>", 1
+            "</svg>", f"{pacman_css(routes)}</svg>", 1
         )
         write_svg(path, animated_svg.rstrip("\n"))
 
