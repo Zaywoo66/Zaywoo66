@@ -41,11 +41,11 @@ Rust · Python · Go · TypeScript · React · FastAPI · PostgreSQL · Docker �
   <img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=Zaywoo66&amp;theme=nord_dark" alt="Публичная активность Zaywoo66 на GitHub" width="100%">
 </p>
 <p align="center">
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=Zaywoo66&amp;theme=nord_dark" alt="Публичная статистика GitHub: звёзды, коммиты, pull requests и вклад в проекты" width="49%">
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=Zaywoo66&amp;theme=nord_dark" alt="Языки в публичных коммитах Zaywoo66" width="49%">
+  <img src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=Zaywoo66&amp;theme=nord_dark" alt="Публичная статистика GitHub: звёзды, коммиты, pull requests и вклад в проекты" width="340">
+  <img src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=Zaywoo66&amp;theme=nord_dark" alt="Языки в публичных коммитах Zaywoo66" width="340">
 </p>
 
-<sub>Карточки показывают публичные данные GitHub и обновляются сервисом статистики; закрытые репозитории в них не учитываются.</sub>
+<sub>Карточки показывают публичные данные GitHub с задержкой обновления; закрытые репозитории в них не учитываются.</sub>
 
 ### На связи
 
