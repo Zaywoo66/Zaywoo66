@@ -27,6 +27,13 @@ jobs:
           outputs: |
             dist/contribution-snake.svg?palette=github-dark&color_snake=#f5d88f&color_dots=#405a79,#56779b,#6e98bf,#8fb9d8,#b1d6ec
 
+      - name: Render arcade contribution graph
+        uses: abozanona/pacman-contribution-graph@294c47eff28a41339a279107ae771b5fa020037a
+        with:
+          github_user_name: Zaywoo66
+          games: pacman
+          hide_month_labels: 'true'
+
       - name: Publish generated SVG
         uses: crazy-max/ghaction-github-pages@1d6ee9b181a81033a16bd707a1401afa978daab4 # v5.0.0
         with:
