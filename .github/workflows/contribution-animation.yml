@@ -25,7 +25,7 @@ jobs:
         with:
           github_user_name: Zaywoo66
           outputs: |
-            dist/contribution-snake.svg?palette=github-dark&color_snake=#b7dcf5&color_dots=#243247,#344e6a,#4b6f94,#6895ba,#8dbde0
+            dist/contribution-snake.svg?palette=github-dark&color_snake=#f5d88f&color_dots=#405a79,#56779b,#6e98bf,#8fb9d8,#b1d6ec
 
       - name: Publish generated SVG
         uses: crazy-max/ghaction-github-pages@1d6ee9b181a81033a16bd707a1401afa978daab4 # v5.0.0
