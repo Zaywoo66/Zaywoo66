@@ -40,7 +40,7 @@ Rust · Python · Go · TypeScript · React · FastAPI · PostgreSQL · Docker �
   <img src="https://streak-stats.demolab.com?user=Zaywoo66&amp;theme=tokyonight&amp;hide_border=true" alt="Анимированная статистика публичных вкладов и серий активности Zaywoo66" width="495">
 </p>
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Zaywoo66/Zaywoo66/output/contribution-snake.svg?v=2" alt="Анимированный график публичных вкладов Zaywoo66" width="100%">
+  <img src="https://raw.githubusercontent.com/Zaywoo66/Zaywoo66/output/contribution-snake.svg?v=3" alt="Анимированный график публичных вкладов Zaywoo66" width="100%">
 </p>
 
 <sub>Сторонние карточки показывают публичные данные с задержкой, поэтому их счётчики могут отличаться от встроенного графика GitHub ниже.</sub>
