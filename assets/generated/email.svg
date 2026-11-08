@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 94" role="img" aria-labelledby="title desc">
+<title id="title">Email</title><desc id="desc">Contact link: Email Alikhan</desc>
+<style>svg { --bg:#121b31; --text:#f5f7ff; --line:#42577d; --accent:#76e4df; font-family:system-ui,-apple-system,"Segoe UI",sans-serif; }
+@media (prefers-color-scheme:light) { svg { --bg:#e9eef9; --text:#18223d; --line:#91a5c5; --accent:#087f82; } }</style>
+<rect x="1" y="1" width="278" height="92" rx="15" fill="var(--bg)" stroke="var(--line)" stroke-width="2"/>
+<rect x="29" y="37" width="32" height="24" rx="3" fill="none" stroke="var(--accent)" stroke-width="3"/><path d="m30 40 15 12 15-12" fill="none" stroke="var(--accent)" stroke-width="3"/><text x="81" y="59" fill="var(--text)" font-size="29" font-weight="650">Email</text>
+</svg>
