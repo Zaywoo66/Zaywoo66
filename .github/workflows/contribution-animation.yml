@@ -40,22 +40,3 @@ jobs:
             git commit -m 'Update public profile graphics'
             git push origin "HEAD:${GITHUB_REF_NAME}"
           fi
-
-      - name: Render arcade contribution graph
-        uses: abozanona/pacman-contribution-graph@294c47eff28a41339a279107ae771b5fa020037a
-        with:
-          github_user_name: Zaywoo66
-          games: pacman
-          hide_month_labels: 'true'
-
-      - name: Publish CSS motion and static contribution variants
-        run: python scripts/generate_profile_svg.py patch-pacman --directory dist
-
-      - name: Publish generated SVG
-        uses: crazy-max/ghaction-github-pages@1d6ee9b181a81033a16bd707a1401afa978daab4 # v5.0.0
-        with:
-          target_branch: output
-          build_dir: dist
-          commit_message: Update contribution animation
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

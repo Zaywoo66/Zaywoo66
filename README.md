@@ -91,12 +91,21 @@ Tools: Git, GitHub Actions, Docker, Docker Compose, Linux
 </p>
 <p align="center">
   <picture>
-    <source media="(prefers-reduced-motion: reduce) and (prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Zaywoo66/Zaywoo66/output/pacman-contribution-graph-dark-static.svg">
-    <source media="(prefers-reduced-motion: reduce)" srcset="https://raw.githubusercontent.com/Zaywoo66/Zaywoo66/output/pacman-contribution-graph-static.svg">
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Zaywoo66/Zaywoo66/output/pacman-contribution-graph-dark.svg">
-    <img src="https://raw.githubusercontent.com/Zaywoo66/Zaywoo66/output/pacman-contribution-graph.svg" alt="Animated Pac-Man path through Alikhan's public GitHub contribution calendar" width="100%">
+    <source media="(prefers-reduced-motion: reduce) and (prefers-color-scheme: light)" srcset="assets/generated/calendar-light-static.svg">
+    <source media="(prefers-reduced-motion: reduce)" srcset="assets/generated/calendar-static.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/generated/calendar-light.svg">
+    <img src="assets/generated/calendar.svg" alt="Public GitHub contribution calendar for the last 26 complete weeks" width="600">
   </picture>
 </p>
+<p align="center">
+  <picture>
+    <source media="(prefers-reduced-motion: reduce) and (prefers-color-scheme: light)" srcset="assets/generated/trend-light-static.svg">
+    <source media="(prefers-reduced-motion: reduce)" srcset="assets/generated/trend-static.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/generated/trend-light.svg">
+    <img src="assets/generated/trend.svg" alt="Weekly public GitHub contribution counts for the same 26 complete weeks" width="600">
+  </picture>
+</p>
+<p align="center"><sub>Public GitHub activity; the current partial week is excluded. Dates and counts are shown in each graphic.</sub></p>
 
 ## Contact
 
