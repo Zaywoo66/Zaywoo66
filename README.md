@@ -53,12 +53,14 @@ Telegram: @waattoo
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/stack-dark.svg">
-  <img src="assets/stack-light.svg" alt="Stack: Backend: Python, FastAPI, PostgreSQL, Go. Frontend: React, TypeScript, Vite, Tailwind CSS. Tools: Docker, GitHub Actions." width="100%">
+  <img src="assets/stack-light.svg" alt="Stack: Backend: Python, FastAPI, PostgreSQL, Go. Frontend: React, TypeScript, Vite, Tailwind CSS. Tools: Docker, GitHub Actions. Data / ML: scikit-learn, XGBoost. Also: Rust, Java." width="100%">
 </picture>
 
 - **Backend:** Python · FastAPI · PostgreSQL · Go
 - **Frontend:** React · TypeScript · Vite · Tailwind CSS
 - **Tools:** Docker · GitHub Actions
+- **Data / ML:** scikit-learn · XGBoost
+- **Also:** Rust · Java
 
 </details>
 
@@ -75,12 +77,14 @@ Past contribution: [Soup Wall](https://github.com/SoupTeam/soup-wall) (Linux too
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/stack-dark.svg">
-  <img src="assets/stack-light.svg" alt="Stack: Backend: Python, FastAPI, PostgreSQL, Go. Frontend: React, TypeScript, Vite, Tailwind CSS. Tools: Docker, GitHub Actions." width="100%">
+  <img src="assets/stack-light.svg" alt="Stack: Backend: Python, FastAPI, PostgreSQL, Go. Frontend: React, TypeScript, Vite, Tailwind CSS. Tools: Docker, GitHub Actions. Data / ML: scikit-learn, XGBoost. Also: Rust, Java." width="100%">
 </picture>
 
 - **Backend:** Python · FastAPI · PostgreSQL · Go
 - **Frontend:** React · TypeScript · Vite · Tailwind CSS
 - **Tools:** Docker · GitHub Actions
+- **Data / ML:** scikit-learn · XGBoost
+- **Also:** Rust · Java
 
 ## Activity
 

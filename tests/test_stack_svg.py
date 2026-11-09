@@ -10,16 +10,18 @@ GROUPS = {
     "Backend": ["Python", "FastAPI", "PostgreSQL", "Go"],
     "Frontend": ["React", "TypeScript", "Vite", "Tailwind CSS"],
     "Tools": ["Docker", "GitHub Actions"],
+    "Data / ML": ["scikit-learn", "XGBoost"],
+    "Also": ["Rust", "Java"],
 }
 ALT = ("Stack: Backend: Python, FastAPI, PostgreSQL, Go. "
        "Frontend: React, TypeScript, Vite, Tailwind CSS. "
-       "Tools: Docker, GitHub Actions.")
+       "Tools: Docker, GitHub Actions. "
+       "Data / ML: scikit-learn, XGBoost. Also: Rust, Java.")
 SVG = "{http://www.w3.org/2000/svg}"
 
 
 class StackSvgTests(unittest.TestCase):
     def test_themes_have_exact_stack_and_local_icons(self):
-        expected = [item for group in GROUPS.items() for item in (group[0], *group[1])]
         for theme in ("dark", "light"):
             with self.subTest(theme=theme):
                 path = ROOT / "assets" / f"stack-{theme}.svg"
@@ -27,11 +29,23 @@ class StackSvgTests(unittest.TestCase):
                 self.assertLess(len(payload), 150_000)
                 text = payload.decode("utf-8")
                 root = ET.fromstring(payload)
-                self.assertEqual(root.attrib["viewBox"], "0 0 1200 260")
-                labels = [element.text for element in root.iter(f"{SVG}text")]
-                self.assertEqual(labels, expected)
-                self.assertEqual(len(list(root.iter(f"{SVG}svg"))), 11)
+                self.assertEqual(root.attrib["viewBox"], "0 0 1200 340")
+                rows = [element for element in root.iter(f"{SVG}g") if "data-group" in element.attrib]
+                self.assertEqual([row.attrib["data-group"] for row in rows], list(GROUPS))
+                for row in rows:
+                    names = [element.text for element in row.iter(f"{SVG}text")
+                             if element.attrib.get("class") == "chip-name"]
+                    self.assertEqual(names, GROUPS[row.attrib["data-group"]])
+                    self.assertTrue(all(element.attrib.get("font-size") == "16"
+                                        for element in row.iter(f"{SVG}text")
+                                        if element.attrib.get("class") == "chip-name"))
+                    self.assertEqual(len([element for element in row.iter(f"{SVG}text")
+                                          if element.attrib.get("class") == "group-label"]), 1)
+                self.assertEqual(len(list(root.iter(f"{SVG}svg"))), 13)
+                self.assertEqual([element.text for element in root.iter(f"{SVG}text")
+                                  if element.attrib.get("class") == "monogram"], ["XG", "Ja"])
                 self.assertIn("@media (prefers-reduced-motion:reduce)", text)
+                self.assertIn("@media (max-width:500px){.chip-name{font-size:32px}", text)
                 self.assertIn(".chip{opacity:1!important", text)
                 self.assertIn("13s ease-in-out infinite", text)
                 self.assertIn("@keyframes sweep", text)
@@ -53,7 +67,7 @@ class StackSvgTests(unittest.TestCase):
             for label, names in GROUPS.items():
                 self.assertIn(f"**{label}:** {' · '.join(names)}", section)
         self.assertEqual(readme.count(f'alt="{ALT}"'), 2)
-        for forbidden in ("Rust", "Java", "Node", "Linux"):
+        for forbidden in ("Node", "Linux"):
             self.assertNotIn(forbidden, english)
             self.assertNotIn(forbidden, russian)
 
