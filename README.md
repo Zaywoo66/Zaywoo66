@@ -1,7 +1,7 @@
 <p align="center">
   <picture>
-    <source media="(prefers-reduced-motion: reduce)" srcset="assets/banner-static.webp">
-    <img src="assets/banner.webp" alt="Banner illustration by Luis Zuno (ansimuz)" width="100%">
+    <source media="(prefers-reduced-motion: reduce)" srcset="https://raw.githubusercontent.com/Zaywoo66/Zaywoo66/main/assets/banner-static.webp">
+    <img src="https://raw.githubusercontent.com/Zaywoo66/Zaywoo66/main/assets/banner.webp" alt="Banner illustration by Luis Zuno (ansimuz)" width="100%">
   </picture>
 </p>
 
@@ -87,22 +87,22 @@ Tools: Git, GitHub Actions, Docker, Docker Compose, Linux
 ## Activity
 
 <p align="center">
-  <img src="assets/generated/stats.svg" alt="Public GitHub repository and received-star counts, with the snapshot date" width="600">
+  <img src="https://raw.githubusercontent.com/Zaywoo66/Zaywoo66/main/assets/generated/stats.svg" alt="Public GitHub repository and received-star counts, with the snapshot date" width="600">
 </p>
 <p align="center">
   <picture>
-    <source media="(prefers-reduced-motion: reduce) and (prefers-color-scheme: light)" srcset="assets/generated/calendar-light-static.svg">
-    <source media="(prefers-reduced-motion: reduce)" srcset="assets/generated/calendar-static.svg">
-    <source media="(prefers-color-scheme: light)" srcset="assets/generated/calendar-light.svg">
-    <img src="assets/generated/calendar.svg" alt="Public GitHub contribution calendar for the last 26 complete weeks" width="600">
+    <source media="(prefers-reduced-motion: reduce) and (prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Zaywoo66/Zaywoo66/main/assets/generated/calendar-light-static.svg">
+    <source media="(prefers-reduced-motion: reduce)" srcset="https://raw.githubusercontent.com/Zaywoo66/Zaywoo66/main/assets/generated/calendar-static.svg">
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Zaywoo66/Zaywoo66/main/assets/generated/calendar-light.svg">
+    <img src="https://raw.githubusercontent.com/Zaywoo66/Zaywoo66/main/assets/generated/calendar.svg" alt="Public GitHub contribution calendar for the last 26 complete weeks" width="600">
   </picture>
 </p>
 <p align="center">
   <picture>
-    <source media="(prefers-reduced-motion: reduce) and (prefers-color-scheme: light)" srcset="assets/generated/trend-light-static.svg">
-    <source media="(prefers-reduced-motion: reduce)" srcset="assets/generated/trend-static.svg">
-    <source media="(prefers-color-scheme: light)" srcset="assets/generated/trend-light.svg">
-    <img src="assets/generated/trend.svg" alt="Weekly public GitHub contribution counts for the same 26 complete weeks" width="600">
+    <source media="(prefers-reduced-motion: reduce) and (prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Zaywoo66/Zaywoo66/main/assets/generated/trend-light-static.svg">
+    <source media="(prefers-reduced-motion: reduce)" srcset="https://raw.githubusercontent.com/Zaywoo66/Zaywoo66/main/assets/generated/trend-static.svg">
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Zaywoo66/Zaywoo66/main/assets/generated/trend-light.svg">
+    <img src="https://raw.githubusercontent.com/Zaywoo66/Zaywoo66/main/assets/generated/trend.svg" alt="Weekly public GitHub contribution counts for the same 26 complete weeks" width="600">
   </picture>
 </p>
 <p align="center"><sub>Public GitHub activity; the current partial week is excluded. Dates and counts are shown in each graphic.</sub></p>
