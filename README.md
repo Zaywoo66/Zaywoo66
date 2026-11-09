@@ -49,6 +49,17 @@ nginx-логов и GitHub Action, который запускает тольк�
 
 Telegram: @waattoo
 
+### Технологии
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/stack-dark.svg">
+  <img src="assets/stack-light.svg" alt="Stack: Backend: Python, FastAPI, PostgreSQL, Go. Frontend: React, TypeScript, Vite, Tailwind CSS. Tools: Docker, GitHub Actions." width="100%">
+</picture>
+
+- **Backend:** Python · FastAPI · PostgreSQL · Go
+- **Frontend:** React · TypeScript · Vite · Tailwind CSS
+- **Tools:** Docker · GitHub Actions
+
 </details>
 
 ## Projects
@@ -61,6 +72,11 @@ Telegram: @waattoo
 Past contribution: [Soup Wall](https://github.com/SoupTeam/soup-wall) (Linux tooling, CI checks, diagnostics for an installed pilot).
 
 ## Stack
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/stack-dark.svg">
+  <img src="assets/stack-light.svg" alt="Stack: Backend: Python, FastAPI, PostgreSQL, Go. Frontend: React, TypeScript, Vite, Tailwind CSS. Tools: Docker, GitHub Actions." width="100%">
+</picture>
 
 - **Backend:** Python · FastAPI · PostgreSQL · Go
 - **Frontend:** React · TypeScript · Vite · Tailwind CSS
