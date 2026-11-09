@@ -1,88 +1,19 @@
 #!/usr/bin/env python3
-"""Generate the profile's own SVGs from public GitHub data.
-
-The Pac-Man contribution graph is rendered by its existing action. Its public
-contribution cells are retained; motion is converted to small CSS-only SVGs.
-"""
+"""Generate the profile's own SVGs from public GitHub data."""
 
 from __future__ import annotations
 
 import argparse
-import re
-from datetime import datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 import json
-import math
 import os
 from pathlib import Path
 import urllib.request
-import xml.etree.ElementTree as ET
 
 
 USER = "Zaywoo66"
 MAX_RESPONSE = 1_000_000
 MAX_SVG = 150_000
-SMIL_ELEMENT = re.compile(r"<animate(?:Transform|Motion)?\b[\s\S]*?/>")
-METADATA_ELEMENT = re.compile(r"<metadata>.*?</metadata>", re.DOTALL)
-
-
-def pacman_route(element: ET.Element, width: int, height: int) -> tuple[str, tuple[int, int], str]:
-    """Keep the upstream maze route, reducing only collinear intermediate steps."""
-    motion = [child for child in element if child.attrib.get("type") == "translate"
-              and child.attrib.get("attributeName") == "transform"]
-    if len(motion) != 1:
-        raise ValueError("missing or duplicate maze route")
-    animation = motion[0]
-    duration = re.fullmatch(r"(\d+)ms", animation.attrib.get("dur", ""))
-    positions = animation.attrib.get("values", "").split(";")
-    times = animation.attrib.get("keyTimes", "").split(";")
-    if not duration or not 10_000 <= int(duration[1]) <= 180_000 or not 3 <= len(positions) <= 1000:
-        raise ValueError("unsupported maze animation")
-    if len(positions) != len(times):
-        raise ValueError("incomplete maze route")
-    try:
-        keys = [float(time) for time in times]
-    except ValueError as exc:
-        raise ValueError("invalid maze timing") from exc
-    if (keys[0] != 0 or keys[-1] != 1
-            or any(not math.isfinite(time) or not 0 <= time <= 1 for time in keys)
-            or any(a > b for a, b in zip(keys, keys[1:]))):
-        raise ValueError("invalid maze timing")
-    coords = []
-    for value in positions:
-        match = re.fullmatch(r"(-?\d+),(-?\d+)", value)
-        if match is None:
-            raise ValueError("invalid maze coordinate")
-        x, y = int(match[1]), int(match[2])
-        if not 0 <= x <= width or not 0 <= y <= height:
-            raise ValueError("maze route leaves canvas")
-        coords.append((x, y))
-    turns = [0]
-    for index in range(1, len(coords) - 1):
-        before = (coords[index][0] - coords[index - 1][0],
-                  coords[index][1] - coords[index - 1][1])
-        after = (coords[index + 1][0] - coords[index][0],
-                 coords[index + 1][1] - coords[index][1])
-        if before != after:
-            turns.append(index)
-    turns.append(len(coords) - 1)
-    frames = "".join(
-        f"{100 * index / (len(coords) - 1):.4f}%"
-        f"{{transform:translate({coords[index][0]}px,{coords[index][1]}px)}}"
-        for index in turns
-    )
-    return f"{int(duration[1]) / 1000:g}s", coords[0], frames
-
-
-def pacman_css(routes: dict[str, tuple[str, tuple[int, int], str]]) -> str:
-    selectors = []
-    rules = []
-    for actor, (duration, _start, frames) in routes.items():
-        rules.append(f"@keyframes route-{actor}{{{frames}}}")
-        rules.append(f"#{actor}{{animation:route-{actor} {duration} linear infinite alternate}}")
-        selectors.append(f"#{actor}")
-    rules.append("@media (prefers-reduced-motion:reduce){"
-                 + ",".join(selectors) + "{animation:none!important}}")
-    return "<style>" + "".join(rules) + "</style>"
 
 
 def github_json(path: str) -> object:
@@ -133,6 +64,150 @@ def public_stats(fetch=github_json) -> tuple[str, str]:
         return public_repos, str(stars)
     except (OSError, ValueError, KeyError, TypeError, json.JSONDecodeError):
         return public_repos, "n/a"
+
+
+def github_contributions() -> object:
+    """Read the public contribution calendar with the workflow's GitHub token."""
+    token = os.environ.get("GITHUB_TOKEN")
+    if not token:
+        raise ValueError("GITHUB_TOKEN is required for contribution graphics")
+    query = ("query { user(login: \"Zaywoo66\") { contributionsCollection { "
+             "restrictedContributionsCount contributionCalendar { "
+             "totalContributions weeks { contributionDays { date contributionCount } } "
+             "} } } }")
+    request = urllib.request.Request(
+        "https://api.github.com/graphql",
+        data=json.dumps({"query": query}).encode("utf-8"),
+        headers={"Accept": "application/vnd.github+json",
+                 "Content-Type": "application/json",
+                 "User-Agent": "Zaywoo66-profile-svg",
+                 "Authorization": f"Bearer {token}"},
+    )
+    with urllib.request.urlopen(request, timeout=10) as response:
+        raw = response.read(MAX_RESPONSE + 1)
+    if len(raw) > MAX_RESPONSE:
+        raise ValueError("GitHub contribution response exceeds the bound")
+    return json.loads(raw)
+
+
+def contribution_weeks(fetch=github_contributions, as_of: date | None = None) -> list[list[tuple[date, int]]]:
+    """Return 26 complete Sunday-Saturday weeks, refusing partial or private data."""
+    today = as_of or datetime.now(timezone.utc).date()
+    payload = fetch()
+    try:
+        if payload.get("errors"):
+            raise ValueError("GitHub contribution query failed")
+        collection = payload["data"]["user"]["contributionsCollection"]
+        calendar = collection["contributionCalendar"]
+        if collection["restrictedContributionsCount"] != 0:
+            raise ValueError("private contribution counts are not supported")
+        raw_weeks = calendar["weeks"]
+        total = calendar["totalContributions"]
+        if not isinstance(raw_weeks, list) or not 52 <= len(raw_weeks) <= 54:
+            raise ValueError("incomplete contribution calendar")
+        if isinstance(total, bool) or not isinstance(total, int) or total < 0:
+            raise ValueError("invalid contribution total")
+        weeks: list[list[tuple[date, int]]] = []
+        for raw_week in raw_weeks:
+            raw_days = raw_week["contributionDays"]
+            if not isinstance(raw_days, list) or not 1 <= len(raw_days) <= 7:
+                raise ValueError("incomplete contribution week")
+            week = []
+            for raw_day in raw_days:
+                stamp, count = raw_day["date"], raw_day["contributionCount"]
+                day = date.fromisoformat(stamp)
+                if stamp != day.isoformat() or isinstance(count, bool) or not isinstance(count, int) or not 0 <= count <= 10000:
+                    raise ValueError("invalid contribution day")
+                week.append((day, count))
+            weeks.append(week)
+        days = [entry for week in weeks for entry in week]
+        if (not 365 <= len(days) <= 367
+                or any(right[0] - left[0] != timedelta(days=1)
+                       for left, right in zip(days, days[1:]))
+                or sum(count for _, count in days) != total
+                or not today - timedelta(days=1) <= days[-1][0] <= today):
+            raise ValueError("stale or inconsistent contribution calendar")
+        complete = [week for week in weeks if len(week) == 7
+                    and week[0][0].weekday() == 6
+                    and week[-1][0].weekday() == 5
+                    and week[-1][0] < today]
+        if len(complete) < 26:
+            raise ValueError("not enough complete contribution weeks")
+        return complete[-26:]
+    except (KeyError, TypeError, AttributeError, OverflowError) as exc:
+        raise ValueError("malformed contribution calendar") from exc
+
+
+def contribution_svg(weeks: list[list[tuple[date, int]]], theme: str, kind: str,
+                     static: bool = False) -> str:
+    """Render a truthful daily calendar or weekly line chart from the same window."""
+    if theme not in ("dark", "light") or kind not in ("calendar", "trend"):
+        raise ValueError("unsupported contribution graphic")
+    if len(weeks) != 26 or any(len(week) != 7 for week in weeks):
+        raise ValueError("contribution graphic requires 26 complete weeks")
+    palette = {
+        "dark": ("#0d1117", "#131c2b", "#f1f4f8", "#aebbd0", "#33455b",
+                 "#79ccc7", "#e5a1b4", ("#223047", "#2b5965", "#347a80", "#59aaa6", "#9cddd1")),
+        "light": ("#f6f8fb", "#ffffff", "#1d2639", "#50617a", "#c4cfdd",
+                  "#147d82", "#a54f79", ("#e9edf3", "#c9e6e3", "#91caca", "#4b9ea0", "#16777f")),
+    }[theme]
+    bg, panel, text, muted, line, teal, pink, levels = palette
+    start, end = weeks[0][0][0], weeks[-1][-1][0]
+    weekly = [sum(count for _, count in week) for week in weeks]
+    total = sum(weekly)
+    common = (f'<style>svg{{font-family:system-ui,-apple-system,"Segoe UI",sans-serif}}'
+              f'@media (prefers-reduced-motion:reduce){{*{{animation:none!important}}'
+              f'.trace{{stroke-dashoffset:0!important;opacity:1!important}}}}</style>'
+              f'<rect width="600" height="260" rx="20" fill="{bg}"/>'
+              f'<rect x="12" y="12" width="576" height="236" rx="16" fill="{panel}" stroke="{line}"/>')
+    if kind == "calendar":
+        cells = []
+        for column, week in enumerate(weeks):
+            rects = []
+            for row, (_, count) in enumerate(week):
+                level = 0 if count == 0 else 1 if count <= 2 else 2 if count <= 5 else 3 if count <= 9 else 4
+                rects.append(f'<rect x="{84 + column * 19}" y="{79 + row * 20}" width="15" height="15" rx="3" fill="{levels[level]}"/>')
+            cells.append(f'<g class="week" style="animation-delay:{column * .12:.2f}s">{"".join(rects)}</g>')
+        motion = '' if static else ('<style>@keyframes pass{0%,100%{opacity:1}5%{opacity:.45}11%{opacity:1}}'
+                                    '.week{animation:pass 8s ease-in-out infinite}'
+                                    '@media (prefers-reduced-motion:reduce){.week{animation:none!important;opacity:1!important}}</style>')
+        labels = ''.join(f'<text x="31" y="{90 + row * 20}" fill="{muted}" font-size="14">{name}</text>'
+                         for row, name in ((1, "M"), (3, "W"), (5, "F")))
+        title = 'Public contribution calendar'
+        description = f'{total} public contributions from {start} through {end}, across 26 complete weeks. Each cell is one day; stronger color means more contributions.'
+        body = (f'<text x="28" y="47" fill="{text}" font-size="23" font-weight="650">Contribution calendar</text>'
+                f'<text x="572" y="47" text-anchor="end" fill="{teal}" font-size="17" font-weight="650">{total} in 26 weeks</text>'
+                f'{labels}{"".join(cells)}'
+                f'<text x="28" y="238" fill="{muted}" font-size="14">{start:%d %b %Y} — {end:%d %b %Y} · complete weeks</text>'
+                f'<text x="573" y="238" text-anchor="end" fill="{muted}" font-size="14">less · more</text>'
+                f'{motion}')
+    else:
+        peak = max(weekly)
+        scale = max(1, peak)
+        points = [(65 + index * 20, 198 - round(count * 112 / scale))
+                  for index, count in enumerate(weekly)]
+        path = "M" + " L".join(f"{x} {y}" for x, y in points)
+        dots = ''.join(f'<circle cx="{x}" cy="{y}" r="2.8" fill="{pink}"/>' for x, y in points)
+        title = 'Weekly public contribution trend'
+        description = (f'{total} public contributions across 26 complete weeks from {start} through {end}; '
+                       f'peak weekly count {peak}. Weekly counts, earliest to latest: {", ".join(map(str, weekly))}.')
+        motion = ('<style>.trace{stroke-dashoffset:0;opacity:1}</style>' if static else
+                  '<style>@keyframes trace{0%{stroke-dashoffset:1000;opacity:0}5%{opacity:1}'
+                  '55%,86%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:1000;opacity:0}}'
+                  '.trace{stroke-dasharray:1000;animation:trace 11s ease-in-out infinite}'
+                  '@media (prefers-reduced-motion:reduce){.trace{animation:none!important;stroke-dashoffset:0!important;opacity:1!important}}</style>')
+        body = (f'<text x="28" y="47" fill="{text}" font-size="23" font-weight="650">Weekly activity</text>'
+                f'<text x="572" y="47" text-anchor="end" fill="{teal}" font-size="17" font-weight="650">peak {peak} / week</text>'
+                f'<path d="M65 86H565 M65 142H565 M65 198H565" stroke="{line}" stroke-width="1"/>'
+                f'<text x="27" y="91" fill="{muted}" font-size="14">{scale}</text>'
+                f'<text x="27" y="203" fill="{muted}" font-size="14">0</text>'
+                f'<path d="{path}" fill="none" stroke="{teal}" stroke-opacity=".24" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>'
+                f'<path class="trace" d="{path}" pathLength="1000" fill="none" stroke="{teal}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>'
+                f'{dots}'
+                f'<text x="28" y="238" fill="{muted}" font-size="14">{start:%d %b %Y} — {end:%d %b %Y} · weekly counts</text>'
+                f'{motion}')
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 260" role="img" aria-labelledby="title desc">'
+            f'<title id="title">{title}</title><desc id="desc">{description}</desc>{common}{body}</svg>')
 
 
 def header_svg(theme: str = "dark", variant: str = "flow", static: bool = False) -> str:
@@ -346,87 +421,29 @@ def write_svg(path: Path, content: str) -> None:
     path.write_bytes(encoded)
 
 
-def patch_pacman(directory: Path) -> None:
-    for name in ("pacman-contribution-graph.svg", "pacman-contribution-graph-dark.svg"):
-        path = directory / name
-        svg = path.read_text(encoding="utf-8")
-        if "<svg" not in svg or "</svg>" not in svg:
-            raise ValueError(f"invalid SVG: {name}")
-        canvas = re.search(r'<svg\s+width="(\d+)"\s+height="(\d+)"', svg)
-        if canvas is None or 'id="pacman"' not in svg:
-            raise ValueError(f"unexpected Pac-Man canvas or sprite: {name}")
-        width, height = int(canvas[1]), int(canvas[2])
-        if not 600 <= width <= 2000 or not 100 <= height <= 400:
-            raise ValueError(f"unexpected Pac-Man canvas size: {name}")
-        root = ET.fromstring(svg)
-        routes = {}
-        for actor in ("pacman", "ghost0", "ghost1", "ghost2", "ghost3"):
-            actors = [item for item in root.iter() if item.attrib.get("id") == actor]
-            if len(actors) != 1:
-                raise ValueError(f"missing or duplicate maze actor: {actor}")
-            element = actors[0]
-            routes[actor] = pacman_route(element, width, height)
-            start = routes[actor][1]
-            opening = re.search(rf'<(?:path|g)\b[^>]*\bid="{actor}"[^>]*>', svg)
-            if opening is None:
-                raise ValueError(f"missing maze actor tag: {actor}")
-            tag = opening[0]
-            initial = f'transform="translate({start[0]},{start[1]})"'
-            if re.search(r'\btransform="[^"]*"', tag):
-                tag = re.sub(r'\btransform="[^"]*"', initial, tag, count=1)
-            else:
-                tag = tag[:-1] + f" {initial}>"
-            svg = svg[:opening.start()] + tag + svg[opening.end():]
-        for rect in root.iter():
-            if not rect.tag.endswith("rect"):
-                continue
-            fills = [child for child in rect if child.attrib.get("attributeName") == "fill"]
-            if not fills:
-                continue
-            if len(fills) != 1:
-                raise ValueError("ambiguous contribution cell")
-            cell_id = rect.attrib.get("id", "")
-            color = fills[0].attrib.get("values", "").split(";")[0]
-            if not re.fullmatch(r"c-\d+-\d+", cell_id) or not re.fullmatch(r"#[0-9a-fA-F]{6}", color):
-                raise ValueError("invalid contribution cell")
-            pattern = rf'(<rect\b[^>]*\bid="{cell_id}"[^>]*\bfill=")[^"]+'
-            svg, replaced = re.subn(pattern, lambda match: match[1] + color, svg, count=1)
-            if replaced != 1:
-                raise ValueError(f"missing contribution cell: {cell_id}")
-        static_svg, removed = SMIL_ELEMENT.subn("", svg)
-        static_svg = METADATA_ELEMENT.sub("", static_svg)
-        if removed == 0 or re.search(r"<animate\b|<animateTransform\b|<animateMotion\b", static_svg):
-            raise ValueError(f"unsupported animation element: {name}")
-        ET.fromstring(static_svg)
-        static_name = name.replace(".svg", "-static.svg")
-        write_svg(directory / static_name, static_svg.rstrip("\n"))
-        animated_svg = static_svg.replace(
-            "</svg>", f"{pacman_css(routes)}</svg>", 1
-        )
-        write_svg(path, animated_svg.rstrip("\n"))
-
-
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command", choices=("generate", "patch-pacman"))
+    parser.add_argument("command", choices=("generate",))
     parser.add_argument("--directory", type=Path, required=True)
     args = parser.parse_args()
-    if args.command == "patch-pacman":
-        patch_pacman(args.directory)
-    else:
-        repos, stars = public_stats()
-        write_svg(args.directory / "header.svg", header_svg())
-        write_svg(args.directory / "header-light.svg", header_svg("light"))
-        write_svg(args.directory / "header-static.svg", header_svg(static=True))
-        write_svg(args.directory / "header-light-static.svg", header_svg("light", static=True))
-        for theme, suffix in (("dark", ""), ("light", "-light")):
-            write_svg(args.directory / f"header-mobile{suffix}.svg", mobile_header_svg(theme))
-            write_svg(args.directory / f"header-mobile{suffix}-static.svg", mobile_header_svg(theme, True))
-        write_svg(args.directory / "stats.svg", stats_svg(repos, stars, datetime.now(timezone.utc)))
-        for label, kind in (("Telegram", "telegram"), ("Email", "email"), ("LinkedIn", "linkedin")):
-            write_svg(args.directory / f"{kind}.svg", badge_svg(label, kind))
-            write_svg(args.directory / f"{kind}-light.svg", badge_svg(label, kind, "light"))
-        print(f"Generated public profile SVGs: repositories={repos}, stars={stars}")
+    weeks = contribution_weeks()
+    repos, stars = public_stats()
+    write_svg(args.directory / "header.svg", header_svg())
+    write_svg(args.directory / "header-light.svg", header_svg("light"))
+    write_svg(args.directory / "header-static.svg", header_svg(static=True))
+    write_svg(args.directory / "header-light-static.svg", header_svg("light", static=True))
+    for theme, suffix in (("dark", ""), ("light", "-light")):
+        write_svg(args.directory / f"header-mobile{suffix}.svg", mobile_header_svg(theme))
+        write_svg(args.directory / f"header-mobile{suffix}-static.svg", mobile_header_svg(theme, True))
+        for kind in ("calendar", "trend"):
+            write_svg(args.directory / f"{kind}{suffix}.svg", contribution_svg(weeks, theme, kind))
+            write_svg(args.directory / f"{kind}{suffix}-static.svg", contribution_svg(weeks, theme, kind, True))
+    write_svg(args.directory / "stats.svg", stats_svg(repos, stars, datetime.now(timezone.utc)))
+    for label, kind in (("Telegram", "telegram"), ("Email", "email"), ("LinkedIn", "linkedin")):
+        write_svg(args.directory / f"{kind}.svg", badge_svg(label, kind))
+        write_svg(args.directory / f"{kind}-light.svg", badge_svg(label, kind, "light"))
+    print(f"Generated public profile SVGs: repositories={repos}, stars={stars}, "
+          f"contributions={sum(count for week in weeks for _, count in week)} over 26 complete weeks")
 
 
 if __name__ == "__main__":

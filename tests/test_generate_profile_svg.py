@@ -1,5 +1,6 @@
-from datetime import datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
+import copy
 import tempfile
 import unittest
 import xml.etree.ElementTree as ET
@@ -7,9 +8,10 @@ import xml.etree.ElementTree as ET
 from scripts.generate_profile_svg import (
     MAX_SVG,
     badge_svg,
+    contribution_svg,
+    contribution_weeks,
     header_svg,
     mobile_header_svg,
-    patch_pacman,
     public_stats,
     stats_svg,
     write_svg,
@@ -17,6 +19,21 @@ from scripts.generate_profile_svg import (
 
 
 class ProfileSvgTests(unittest.TestCase):
+    @staticmethod
+    def calendar_payload():
+        start = date(2025, 11, 9)
+        days = [{"date": (start + timedelta(days=index)).isoformat(),
+                 "contributionCount": index % 11}
+                for index in range(366)]
+        return {"data": {"user": {"contributionsCollection": {
+            "restrictedContributionsCount": 0,
+            "contributionCalendar": {
+                "totalContributions": sum(day["contributionCount"] for day in days),
+                "weeks": [{"contributionDays": days[index:index + 7]}
+                          for index in range(0, len(days), 7)],
+            },
+        }}}}
+
     def test_public_counts_are_from_complete_owned_repository_list(self):
         def fetch(path):
             if path.startswith("/users/Zaywoo66/repos?"):
@@ -80,47 +97,60 @@ class ProfileSvgTests(unittest.TestCase):
             self.assertIn("*{animation:none!important}",
                           mobile_header_svg(theme, True, "aurora"))
 
-    def test_pacman_output_is_checked_and_motion_can_be_disabled(self):
-        route = ('<animateTransform attributeName="transform" type="translate" '
-                 'dur="40000ms" keyTimes="0;0.3333;0.6667;1" '
-                 'values="22,15;44,15;44,37;44,59"/>')
-        source = ('<svg width="1166" height="184" xmlns="http://www.w3.org/2000/svg">'
-                  '<rect id="c-1-1" x="44" y="37" fill="#161b22">'
-                  '<animate attributeName="fill" values="#39d353;#161b22"/></rect>'
-                  f'<path id="pacman" fill="yellow">{route}</path>'
-                  + ''.join(f'<g id="ghost{i}" transform="translate(0,0)">{route}'
-                            '<circle r="3"/></g>' for i in range(4)) + '</svg>')
-        with tempfile.TemporaryDirectory() as temporary:
-            directory = Path(temporary)
-            for name in ("pacman-contribution-graph.svg", "pacman-contribution-graph-dark.svg"):
-                (directory / name).write_text(source, encoding="utf-8")
-            patch_pacman(directory)
-            for path in directory.iterdir():
-                svg = path.read_text(encoding="utf-8")
+    def test_contributions_use_only_complete_verified_public_weeks(self):
+        payload = self.calendar_payload()
+        weeks = contribution_weeks(lambda: payload, date(2026, 11, 9))
+        self.assertEqual(len(weeks), 26)
+        self.assertEqual(weeks[0][0][0], date(2026, 5, 10))
+        self.assertEqual(weeks[-1][-1][0], date(2026, 11, 7))
+        self.assertEqual(sum(count for week in weeks for _, count in week), 920)
+
+        for mutation in ("private", "missing", "duplicate", "wrong-total", "stale", "graphql-error"):
+            bad = copy.deepcopy(payload)
+            calendar = bad["data"]["user"]["contributionsCollection"]["contributionCalendar"]
+            if mutation == "private":
+                bad["data"]["user"]["contributionsCollection"]["restrictedContributionsCount"] = 1
+            elif mutation == "missing":
+                calendar["weeks"][20]["contributionDays"].pop()
+            elif mutation == "duplicate":
+                calendar["weeks"][20]["contributionDays"][1]["date"] = calendar["weeks"][20]["contributionDays"][0]["date"]
+            elif mutation == "wrong-total":
+                calendar["totalContributions"] += 1
+            elif mutation == "stale":
+                calendar["weeks"][-1]["contributionDays"].pop()
+                calendar["weeks"][-1]["contributionDays"].pop()
+            else:
+                bad["errors"] = [{"message": "unavailable"}]
+            with self.subTest(mutation=mutation), self.assertRaises(ValueError):
+                contribution_weeks(lambda: bad, date(2026, 11, 9))
+
+    def test_both_activity_graphics_are_truthful_and_reduced_motion_safe(self):
+        weeks = contribution_weeks(self.calendar_payload, date(2026, 11, 9))
+        total = sum(count for week in weeks for _, count in week)
+        for theme in ("dark", "light"):
+            for kind in ("calendar", "trend"):
+                svg = contribution_svg(weeks, theme, kind)
                 ET.fromstring(svg)
-                self.assertNotRegex(svg, r"<animate(?:Transform|Motion)?\b")
-                self.assertIn('fill="#39d353"', svg)
-                self.assertIn('transform="translate(22,15)"', svg)
-                if path.name.endswith("-static.svg"):
-                    self.assertNotIn("@keyframes", svg)
+                self.assertLess(len(svg.encode("utf-8")), MAX_SVG)
+                self.assertIn(f"{total} public contributions", svg)
+                self.assertIn("prefers-reduced-motion:reduce", svg)
+                self.assertNotIn("<script", svg)
+                self.assertNotIn("<image", svg)
+                self.assertNotIn("href=", svg)
+                if kind == "calendar":
+                    self.assertEqual(svg.count('class="week"'), 26)
+                    self.assertEqual(svg.count('width="15"'), 182)
                 else:
-                    self.assertIn("prefers-reduced-motion:reduce", svg)
-                    self.assertIn("@keyframes route-pacman", svg)
-                    self.assertIn("@keyframes route-ghost0", svg)
-                    self.assertIn("translate(44px,15px)", svg)
-                    self.assertIn("translate(44px,59px)", svg)
-                    self.assertNotIn("translate(1106px", svg)
-                self.assertLess(path.stat().st_size, MAX_SVG)
+                    self.assertIn("Weekly counts, earliest to latest:", svg)
+                    self.assertIn("@keyframes trace", svg)
+                static_svg = contribution_svg(weeks, theme, kind, True)
+                ET.fromstring(static_svg)
+                self.assertNotIn("@keyframes", static_svg)
+                if kind == "trend":
+                    self.assertIn(".trace{stroke-dashoffset:0;opacity:1}", static_svg)
 
-            broken = source.replace('<g id="ghost3"', '<g id="missing"')
-            (directory / "pacman-contribution-graph.svg").write_text(broken, encoding="utf-8")
-            with self.assertRaisesRegex(ValueError, "missing or duplicate maze actor"):
-                patch_pacman(directory)
-
-    def test_missing_pacman_file_and_oversized_graphic_fail(self):
+    def test_oversized_graphic_fails(self):
         with tempfile.TemporaryDirectory() as temporary:
-            with self.assertRaises(FileNotFoundError):
-                patch_pacman(Path(temporary))
             with self.assertRaises(ValueError):
                 write_svg(Path(temporary) / "big.svg", "x" * MAX_SVG)
 
