@@ -14,7 +14,7 @@ const browser = await chromium.launch({
 });
 
 async function render(activeBrowser, theme, width, reducedMotion, times) {
-  const page = await activeBrowser.newPage({ viewport: { width, height: 390 }, deviceScaleFactor: 1 });
+  const page = await activeBrowser.newPage({ viewport: { width, height: 460 }, deviceScaleFactor: 1 });
   await page.emulateMedia({ colorScheme: theme, reducedMotion: reducedMotion ? 'reduce' : 'no-preference' });
   const svg = await readFile(join(root, 'assets', `stack-${theme}.svg`));
   const src = `data:image/svg+xml;base64,${svg.toString('base64')}`;
