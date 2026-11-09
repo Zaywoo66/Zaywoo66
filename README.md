@@ -1,15 +1,15 @@
 <p align="center">
   <picture>
-    <source media="(prefers-reduced-motion: reduce) and (max-width: 600px) and (prefers-color-scheme: light)" srcset="assets/generated/header-mobile-light-static.svg">
-    <source media="(prefers-reduced-motion: reduce) and (max-width: 600px)" srcset="assets/generated/header-mobile-static.svg">
-    <source media="(max-width: 600px) and (prefers-color-scheme: light)" srcset="assets/generated/header-mobile-light.svg">
-    <source media="(max-width: 600px)" srcset="assets/generated/header-mobile.svg">
-    <source media="(prefers-reduced-motion: reduce) and (prefers-color-scheme: light)" srcset="assets/generated/header-light-static.svg">
-    <source media="(prefers-reduced-motion: reduce)" srcset="assets/generated/header-static.svg">
-    <source media="(prefers-color-scheme: light)" srcset="assets/generated/header-light.svg">
-    <img src="assets/generated/header.svg" alt="Alikhan — Full-stack: Python/FastAPI · React/TypeScript; React, FastAPI and PostgreSQL request flow" width="100%">
+    <source media="(prefers-reduced-motion: reduce)" srcset="assets/banner-static.webp">
+    <img src="assets/banner.gif" alt="Banner illustration by Luis Zuno (ansimuz)" width="100%">
   </picture>
 </p>
+
+<h1 align="center">Alikhan</h1>
+
+<p align="center">Full-stack: Python/FastAPI · React/TypeScript · Astana, Kazakhstan</p>
+
+<p align="center"><sub>Banner art: Gothicvania Town by Luis Zuno (ansimuz) (<a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>; cropped, resized and retimed) — <a href="https://ansimuz.itch.io/gothicvania-town">source</a></sub></p>
 
 ## About
 
