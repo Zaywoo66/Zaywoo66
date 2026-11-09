@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "scripts": {
+    "build:stack": "node scripts/generate_stack_svg.mjs",
+    "verify:stack": "node scripts/verify_stack_svg.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.56.1",
+    "simple-icons": "15.16.0"
+  }
+}
