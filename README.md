@@ -1,7 +1,7 @@
 <p align="center">
   <picture>
     <source media="(prefers-reduced-motion: reduce)" srcset="assets/banner-static.webp">
-    <img src="assets/banner.gif" alt="Banner illustration by Luis Zuno (ansimuz)" width="100%">
+    <img src="assets/banner.webp" alt="Banner illustration by Luis Zuno (ansimuz)" width="100%">
   </picture>
 </p>
 
